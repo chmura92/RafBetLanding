@@ -1,0 +1,117 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { processSteps } from '@/data/process';
+---
+
+<section class="section" id="proces">
+  <SectionHeader
+    num="03"
+    meta="Jak pracujemy"
+    title="Cztery kroki"
+    titleAccent="do gotowej posadzki."
+    subtitle="Bez ukrytych kosztów, bez ciśnienia. Od pierwszego telefonu do gotowej tafli wiesz dokładnie co się dzieje."
+  />
+  <div class="process">
+    {processSteps.map((s, idx) => (
+      <div class="step" style={`animation-delay: ${0.4 + idx * 0.1}s`}>
+        <div class={`step-num ${s.active ? 'active' : ''}`}>{s.num}</div>
+        <div class="step-meta">
+          <span>{s.meta}</span>
+          <span class="meta-dot">·</span>
+          <span>{s.duration}</span>
+        </div>
+        <h3 class="step-title">{s.title}</h3>
+        <p class="step-desc">{s.desc}</p>
+        <div class="step-detail">
+          {s.details.map(d => (
+            <div class="step-detail-item">
+              <span class="step-detail-label">{d.label}</span>
+              <span class="step-detail-value">{d.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="process-cta">
+    <div class="process-cta-text">
+      Wszystko zaczyna się <strong>od telefonu</strong>.<br>
+      Reszta jest na nas.
+    </div>
+    <a class="process-cta-btn" href="#kontakt">
+      <span>Krok 01</span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .section { padding: 64px 0 56px; position: relative; }
+  .process { padding: 0 22px; position: relative; }
+  .step {
+    position: relative;
+    padding: 0 0 32px 56px;
+    opacity: 0; transform: translateY(20px);
+    animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .step:last-child { padding-bottom: 0; }
+  .step::before {
+    content: ''; position: absolute;
+    left: 17px; top: 38px; bottom: -8px;
+    width: 1px;
+    background: linear-gradient(180deg, var(--line-strong) 0%, var(--line) 80%, transparent 100%);
+  }
+  .step:last-child::before { display: none; }
+  .step-num {
+    position: absolute; left: 0; top: 4px;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg-base);
+    border: 1px solid var(--line-strong);
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 600;
+    color: var(--orange);
+    z-index: 2;
+  }
+  .step-num.active { background: var(--orange); color: #0a0a0a; border-color: var(--orange); }
+  .step-meta { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 1.2px; color: var(--text-3); text-transform: uppercase; margin-bottom: 8px; }
+  .step-meta .meta-dot { color: var(--orange); }
+  .step-title { font-family: var(--font-sans); font-size: 24px; font-weight: 700; letter-spacing: -1px; color: var(--text); line-height: 1.05; margin-bottom: 10px; }
+  .step-desc { font-size: 14px; line-height: 1.55; color: var(--text-2); margin-bottom: 14px; }
+  .step-desc strong { color: var(--text); font-weight: 600; }
+  .step-detail {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    padding: 12px 14px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--orange);
+  }
+  .step-detail-item { display: flex; flex-direction: column; gap: 2px; }
+  .step-detail-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1.2px; color: var(--text-3); text-transform: uppercase; }
+  .step-detail-value { font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: var(--text); }
+
+  .process-cta {
+    margin: 12px 22px 0;
+    padding: 24px 22px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: rgba(0,0,0,0.25);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+  }
+  .process-cta-text { font-size: 14px; color: var(--text-2); line-height: 1.4; }
+  .process-cta-text strong { color: var(--text); font-weight: 600; }
+  .process-cta-btn {
+    flex-shrink: 0;
+    padding: 12px 18px;
+    background: var(--orange);
+    color: #0a0a0a;
+    border: 1px solid var(--orange);
+    font-family: var(--font-sans);
+    font-size: 13px; font-weight: 700; letter-spacing: -0.1px;
+    display: flex; align-items: center; gap: 8px;
+    transition: background 0.18s, transform 0.18s;
+  }
+  .process-cta-btn:hover { background: var(--orange-light); transform: translateY(-1px); }
+  .process-cta-btn .arrow { font-family: var(--font-mono); font-size: 14px; }
+</style>
