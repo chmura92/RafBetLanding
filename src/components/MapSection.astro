@@ -1,0 +1,289 @@
+---
+const address = {
+  street: 'ul. Ks. prof. J. Sztonyka 78',
+  city: '49-120 Dąbrowa',
+  phone: '505 895 888',
+  email: 'posadzkiopole@gmail.com',
+  areas: ['Opolskie', 'Dolnośląskie'],
+  gmapsUrl: 'https://www.google.com/maps/place/RafBet/@50.721085,17.7721754,12z/data=!3m1!4b1!4m6!3m5!1s0x47104c99d1d2af27:0xa4551354b1a8b37a!8m2!3d50.721085!4d17.7721754!16s%2Fg%2F1ptyg4956',
+  lat: 50.7239,
+  lon: 17.7340,
+};
+---
+
+<section class="map-section" id="mapa">
+  <div class="map-header">
+    <div class="map-num">
+      <span class="map-num-pill">08</span>
+      <span class="map-num-line"></span>
+      <span class="map-num-meta">Gdzie nas znajdziesz</span>
+    </div>
+    <h2 class="map-title">
+      Baza w <span class="accent">Dąbrowie.</span><br>
+      Pracujemy w terenie.
+    </h2>
+  </div>
+
+  <div class="map-wrap">
+    <div id="leafletMap" data-lat={address.lat} data-lon={address.lon}></div>
+    <a class="map-overlay-btn" href={address.gmapsUrl} target="_blank" rel="noopener">
+      <span class="ico">↗</span>
+      <span>Otwórz w Google Maps</span>
+    </a>
+  </div>
+
+  <div class="address-block">
+    <div class="addr-item">
+      <span class="addr-label">Adres</span>
+      <span class="addr-val">{address.street}<br />{address.city}</span>
+    </div>
+    <div class="addr-item">
+      <span class="addr-label">Telefon</span>
+      <span class="addr-val"><a href={`tel:${address.phone.replace(/\s/g, '')}`}>{address.phone}</a></span>
+    </div>
+    <div class="addr-item">
+      <span class="addr-label">Email</span>
+      <span class="addr-val"><a href={`mailto:${address.email}`}>{address.email}</a></span>
+    </div>
+    <div class="addr-item">
+      <span class="addr-label">Obszar pracy</span>
+      <span class="addr-val areas">{address.areas.join('\n')}</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  let mapInitialized = false;
+
+  async function initMap() {
+    if (mapInitialized) return;
+    mapInitialized = true;
+
+    const el = document.getElementById('leafletMap');
+    if (!el) return;
+    const lat = parseFloat(el.dataset.lat!);
+    const lon = parseFloat(el.dataset.lon!);
+
+    // Inject Leaflet CSS at lazy-time
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(link);
+
+    const L = (await import('leaflet')).default;
+    const map = L.map(el, {
+      center: [lat, lon],
+      zoom: 15,
+      zoomControl: true,
+      scrollWheelZoom: false,
+    });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+      attribution: '© OpenStreetMap © CARTO',
+      subdomains: 'abcd',
+      maxZoom: 19,
+    }).addTo(map);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png', {
+      subdomains: 'abcd', maxZoom: 19, pane: 'shadowPane',
+    }).addTo(map);
+    const pin = L.divIcon({ className: 'rafbet-pin', iconSize: [14, 14], iconAnchor: [7, 7] });
+    L.marker([lat, lon], { icon: pin }).addTo(map);
+  }
+
+  // Lazy: initialize when section enters viewport
+  const section = document.querySelector('.map-section');
+  if (section) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          initMap();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    observer.observe(section);
+  }
+</script>
+
+<style>
+  /* ============================== MAP SECTION ============================== */
+  .map-section {
+    position: relative;
+    background: rgba(0,0,0,0.25);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .map-header {
+    padding: 36px 22px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .map-num {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fade-up 0.6s ease-out 0.1s forwards;
+  }
+  .map-num-pill {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--orange);
+    letter-spacing: 1px;
+  }
+  .map-num-line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .map-num-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .map-title {
+    font-family: var(--font-sans);
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 0.95;
+    color: var(--text);
+    opacity: 0;
+    animation: fade-up 0.6s ease-out 0.2s forwards;
+  }
+  .map-title .accent { color: var(--orange); }
+
+  /* Map wrapper */
+  .map-wrap {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    background: #1c1c20;
+    overflow: hidden;
+    opacity: 0;
+    animation: fade-up 0.7s ease-out 0.3s forwards;
+  }
+  #leafletMap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #14141a;
+    z-index: 1;
+  }
+
+  .map-overlay-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    padding: 9px 13px;
+    background: var(--bg-base);
+    border: 1px solid var(--line-strong);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.18s;
+    z-index: 1000;
+  }
+  .map-overlay-btn:hover { background: var(--bg-deep); }
+  .map-overlay-btn .ico {
+    color: var(--orange);
+    font-family: var(--font-mono);
+  }
+
+  /* Address block */
+  .address-block {
+    padding: 24px 22px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .addr-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .addr-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-3);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+  .addr-val {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .addr-val.areas { white-space: pre-line; }
+  .addr-val a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--orange);
+    padding-bottom: 1px;
+  }
+
+  /* ============================== LEAFLET OVERRIDES (global) ============================== */
+  :global(.leaflet-container) {
+    background: #14141a !important;
+    font-family: var(--font-sans) !important;
+  }
+  :global(.leaflet-control-attribution) {
+    background: rgba(10,10,12,0.7) !important;
+    color: rgba(255,255,255,0.4) !important;
+    font-size: 9px !important;
+    font-family: var(--font-mono) !important;
+  }
+  :global(.leaflet-control-attribution a) {
+    color: rgba(249,115,22,0.7) !important;
+  }
+  :global(.leaflet-control-zoom a) {
+    background: rgba(20,20,24,0.85) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--line-strong) !important;
+    border-radius: 0 !important;
+  }
+  :global(.leaflet-control-zoom a:hover) {
+    background: rgba(30,30,36,0.95) !important;
+    color: var(--orange) !important;
+  }
+
+  /* Custom pin marker (pin-pulse keyframe in animations.css) */
+  :global(.rafbet-pin) {
+    width: 14px;
+    height: 14px;
+    background: var(--orange);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(249,115,22,0.30), 0 0 0 10px rgba(249,115,22,0.12);
+    animation: pin-pulse 2s ease-in-out infinite;
+    position: relative;
+  }
+  :global(.rafbet-pin::after) {
+    content: 'RAFBET';
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--orange);
+    color: #0a0a0c;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 7px;
+    white-space: nowrap;
+  }
+</style>
