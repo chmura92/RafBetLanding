@@ -1,17 +1,80 @@
 ---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Nav from '@/components/Nav.astro';
+import MetaBar from '@/components/MetaBar.astro';
+import Hero from '@/components/Hero.astro';
+import Services from '@/components/Services.astro';
+import Process from '@/components/Process.astro';
+import Gallery from '@/components/Gallery.astro';
+import Lightbox from '@/components/Lightbox.astro';
+import Reviews from '@/components/Reviews.astro';
+import FAQ from '@/components/FAQ.astro';
+import ContactForm from '@/components/ContactForm.astro';
+import MapSection from '@/components/MapSection.astro';
+import Footer from '@/components/Footer.astro';
+import { reviewsAggregate } from '@/data/reviews';
+import { faqItems } from '@/data/faq';
 
+const totalReviews = reviewsAggregate.google.count + reviewsAggregate.oferteo.count;
+const avgRating = ((reviewsAggregate.google.rating * reviewsAggregate.google.count +
+  reviewsAggregate.oferteo.rating * reviewsAggregate.oferteo.count) / totalReviews).toFixed(1);
+
+const jsonLdBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': 'https://posadzki-wylewki.opole.pl/#org',
+  name: '"RAFBET" Rafał Fabiańczyk',
+  image: 'https://posadzki-wylewki.opole.pl/og-image.jpg',
+  url: 'https://posadzki-wylewki.opole.pl/',
+  telephone: '+48505895888',
+  email: 'posadzkiopole@gmail.com',
+  priceRange: '60-110 PLN/m²',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'ul. Ks. prof. J. Sztonyka 78',
+    postalCode: '49-120',
+    addressLocality: 'Dąbrowa',
+    addressRegion: 'Opolskie',
+    addressCountry: 'PL',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: 50.7239, longitude: 17.7340 },
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: 'Opolskie' },
+    { '@type': 'AdministrativeArea', name: 'Dolnośląskie' },
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: avgRating,
+    reviewCount: totalReviews,
+    bestRating: '5',
+    worstRating: '1',
+  },
+};
+const jsonLdFaq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map(f => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer.replace(/<[^>]+>/g, '') },
+  })),
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdBusiness)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdFaq)} slot="head" />
+
+  <Nav />
+  <MetaBar />
+  <Hero />
+  <Services />
+  <Process />
+  <Gallery />
+  <Reviews />
+  <FAQ />
+  <ContactForm />
+  <MapSection />
+  <Footer />
+  <Lightbox />
+</BaseLayout>
