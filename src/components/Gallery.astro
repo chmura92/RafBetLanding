@@ -1,0 +1,135 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeader from './SectionHeader.astro';
+import { galleryItems } from '@/data/gallery';
+---
+
+<section class="section" id="realizacje">
+  <SectionHeader
+    num="04"
+    meta="Realizacje"
+    title="Twoja podłoga"
+    titleAccent="zaczyna się tutaj."
+    subtitle="Domy, hale i kawałek rzemiosła w tle. Wszystko prawdziwe, wszystko nasze."
+  />
+
+  <div class="gallery" id="gallery">
+    {galleryItems.map((item, i) => (
+      <button
+        class={`photo ${!item.visible ? 'hidden' : ''}`}
+        data-i={i}
+        type="button"
+        aria-label={`Powiększ: ${item.caption}`}
+      >
+        <Image
+          src={item.src}
+          alt={item.caption}
+          widths={[300, 600]}
+          sizes="(max-width: 390px) 50vw, 300px"
+          loading={i < 6 ? 'eager' : 'lazy'}
+        />
+        <div class="photo-overlay">
+          <span class="photo-num">{String(i + 1).padStart(2, '0')} / 14</span>
+          <div class="photo-info">
+            <div class="photo-caption">{item.caption}</div>
+            <div class="photo-meta">{item.category}</div>
+          </div>
+        </div>
+      </button>
+    ))}
+  </div>
+
+  <div class="show-more-wrap">
+    <button class="show-more" id="showMore" type="button">
+      <span>Pokaż więcej realizacji</span>
+      <span class="show-more-right">
+        <span class="count">+8 zdjęć</span>
+        <span class="arrow">↓</span>
+      </span>
+    </button>
+  </div>
+</section>
+
+<style>
+  .section { padding: 64px 0 56px; position: relative; }
+  .gallery {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--line);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .photo {
+    position: relative; background: #0a0a0a; overflow: hidden;
+    cursor: zoom-in; aspect-ratio: 1 / 1;
+    padding: 0; border: none;
+    opacity: 0; animation: fade-up 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .photo:nth-child(3), .photo:nth-child(4),
+  .photo:nth-child(7), .photo:nth-child(8),
+  .photo:nth-child(11), .photo:nth-child(12) { aspect-ratio: 1 / 1.25; }
+  .photo.hidden { display: none; }
+  .photo.revealed { display: block; animation: reveal 0.5s ease-out forwards; }
+  .photo :global(img) {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s ease, filter 0.3s ease;
+    filter: saturate(0.85) brightness(0.92);
+  }
+  .photo:hover :global(img) { transform: scale(1.04); filter: saturate(1) brightness(1); }
+  .photo-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.82) 100%);
+    padding: 10px 12px 12px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    pointer-events: none;
+    text-align: left;
+  }
+  .photo-num { font-family: var(--font-mono); font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.9); letter-spacing: 1px; }
+  .photo-info { display: flex; flex-direction: column; gap: 3px; }
+  .photo-caption { font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: #fff; letter-spacing: -0.2px; line-height: 1.2; }
+  .photo-meta { font-family: var(--font-mono); font-size: 9.5px; color: var(--orange); letter-spacing: 1px; text-transform: uppercase; }
+
+  .show-more-wrap { padding: 20px 22px 0; }
+  .show-more {
+    width: 100%;
+    padding: 16px 22px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--line-strong);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 14px; font-weight: 600;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.18s, border-color 0.18s;
+  }
+  .show-more:hover { background: rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.32); }
+  .show-more-right { display: flex; align-items: center; gap: 10px; }
+  .show-more .count { font-family: var(--font-mono); font-size: 11px; color: var(--orange); letter-spacing: 1px; }
+  .show-more .arrow { font-family: var(--font-mono); font-size: 16px; color: var(--orange); transition: transform 0.3s; }
+  .show-more.expanded .arrow { transform: rotate(180deg); }
+</style>
+
+<script>
+  const btn = document.getElementById('showMore');
+  btn?.addEventListener('click', () => {
+    const hidden = document.querySelectorAll<HTMLElement>('.photo.hidden');
+    hidden.forEach((el, i) => {
+      el.classList.remove('hidden');
+      el.classList.add('revealed');
+      el.style.animationDelay = `${i * 0.05}s`;
+    });
+    btn.querySelector<HTMLSpanElement>('span:first-child')!.textContent = 'Pokazano wszystkie';
+    btn.querySelector<HTMLElement>('.count')!.textContent = '14 / 14';
+    btn.classList.add('expanded');
+    (btn as HTMLButtonElement).disabled = true;
+    btn.style.opacity = '0.6';
+    btn.style.cursor = 'default';
+  });
+
+  // Open lightbox on photo click — handled in Lightbox.astro via custom event
+  document.querySelectorAll<HTMLElement>('.photo').forEach(el => {
+    el.addEventListener('click', () => {
+      const i = parseInt(el.dataset.i!);
+      document.dispatchEvent(new CustomEvent('open-lightbox', { detail: { index: i } }));
+    });
+  });
+</script>
