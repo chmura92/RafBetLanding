@@ -1,0 +1,290 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { reviews, reviewsAggregate } from '@/data/reviews';
+
+const totalCount = reviewsAggregate.google.count + reviewsAggregate.oferteo.count;
+const avgRating = ((reviewsAggregate.google.rating * reviewsAggregate.google.count +
+  reviewsAggregate.oferteo.rating * reviewsAggregate.oferteo.count) / totalCount).toFixed(1);
+---
+
+<section class="section" id="opinie">
+  <SectionHeader
+    num="05"
+    meta="Opinie"
+    title="Tak nas widzą"
+    titleAccent="klienci."
+    subtitle={`${totalCount} opinii w sieci, średnia ${avgRating} z 5. Każdą można sprawdzić u źródła.`}
+  />
+
+  <div class="rating-sources">
+    <div class="rating-source">
+      <div class="rating-source-top">
+        <span class="rating-source-name">Google Maps</span>
+        <span class="rating-stars">★★★★½</span>
+      </div>
+      <div class="rating-num-line">
+        <span class="rating-num">{reviewsAggregate.google.rating}</span>
+        <span class="rating-num-max">/ 5</span>
+      </div>
+      <span class="rating-count">{reviewsAggregate.google.count} opinii</span>
+    </div>
+    <div class="rating-source">
+      <div class="rating-source-top">
+        <span class="rating-source-name">Oferteo</span>
+        <span class="rating-stars">★★★★★</span>
+      </div>
+      <div class="rating-num-line">
+        <span class="rating-num">{reviewsAggregate.oferteo.rating.toFixed(1)}</span>
+        <span class="rating-num-max">/ 5</span>
+      </div>
+      <span class="rating-count">{reviewsAggregate.oferteo.count} opinie + Sprawdzona Firma</span>
+    </div>
+  </div>
+
+  <div class="reviews-list">
+    {reviews.map((r, i) => (
+      <article class="review" style={`animation-delay: ${0.55 + i * 0.1}s`}>
+        <header class="review-header">
+          <div class="review-stars-row">
+            <span class="review-stars">{'★'.repeat(r.stars)}</span>
+            <span class="review-source-tag">{r.source}</span>
+          </div>
+          <span class="review-date">{r.date}</span>
+        </header>
+        <p class="review-quote">{r.quote}</p>
+        <div class="review-author">
+          <div class="review-avatar">{r.initials}</div>
+          <div>
+            <div class="review-author-name">{r.authorName}</div>
+            <div class="review-author-meta">{r.authorMeta}</div>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="reviews-cta-wrap">
+    <a class="reviews-cta-btn" href={reviewsAggregate.google.url} target="_blank" rel="noopener">
+      <span class="reviews-cta-left">
+        <span class="reviews-cta-source">Google</span>
+        <span class="reviews-cta-text">Zobacz pozostałe {reviewsAggregate.google.count - 3} opinii</span>
+      </span>
+      <span class="arrow">↗</span>
+    </a>
+    <a class="reviews-cta-btn" href={reviewsAggregate.oferteo.url} target="_blank" rel="noopener">
+      <span class="reviews-cta-left">
+        <span class="reviews-cta-source">Oferteo</span>
+        <span class="reviews-cta-text">Profil sprawdzonej firmy</span>
+      </span>
+      <span class="arrow">↗</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .section { padding: 64px 0 56px; position: relative; }
+
+  /* DUAL SOURCE rating bar */
+  .rating-sources {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: rgba(0,0,0,0.25);
+    opacity: 0;
+    animation: fade-up 0.6s ease-out 0.4s forwards;
+  }
+  .rating-source {
+    padding: 16px 18px;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .rating-source:last-child { border-right: none; }
+  .rating-source-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .rating-source-name {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-3);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .rating-stars {
+    color: var(--amber);
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+  .rating-num-line {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .rating-num {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--text);
+    line-height: 1;
+  }
+  .rating-num-max {
+    font-size: 12px;
+    color: var(--text-3);
+    font-weight: 400;
+  }
+  .rating-count {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-3);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+
+  /* REVIEW CARDS */
+  .reviews-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .review {
+    padding: 28px 22px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+
+  .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .review-stars-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .review-stars {
+    color: var(--amber);
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  .review-source-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    padding: 2px 6px;
+    border: 1px solid var(--line-strong);
+    color: var(--text-3);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .review-date {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .review-quote {
+    font-family: var(--font-sans);
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--text);
+    font-weight: 400;
+    margin-bottom: 18px;
+    position: relative;
+    padding-left: 18px;
+  }
+  .review-quote::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--orange);
+  }
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .review-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #44444a, #28282c);
+    border: 1px solid var(--line-strong);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .review-author-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.1px;
+  }
+  .review-author-meta {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* Bottom CTAs */
+  .reviews-cta-wrap {
+    padding: 22px 22px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    animation: fade-up 0.7s ease-out 0.9s forwards;
+  }
+  .reviews-cta-btn {
+    width: 100%;
+    padding: 14px 18px;
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    transition: background 0.18s, border-color 0.18s;
+  }
+  .reviews-cta-btn:hover {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.32);
+  }
+  .reviews-cta-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .reviews-cta-source {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--orange);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .reviews-cta-text { color: var(--text); font-weight: 500; }
+  .arrow { font-family: var(--font-mono); font-size: 14px; color: var(--orange); }
+</style>
