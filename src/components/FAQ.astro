@@ -1,0 +1,192 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { faqItems } from '@/data/faq';
+---
+
+<section class="section" id="faq">
+  <SectionHeader
+    num="06"
+    meta="Pytania"
+    title="Pytasz,"
+    titleAccent="odpowiadamy."
+    subtitle="Najczęstsze pytania od klientów. Krótko i bez owijania w bawełnę."
+  />
+
+  <div class="faq-list">
+    {faqItems.map((f, i) => (
+      <details class="faq" style={`animation-delay: ${0.4 + i * 0.08}s`}>
+        <summary>
+          <span class="faq-q-num">{f.num}</span>
+          <span class="faq-question">{f.question}</span>
+          <span class="faq-icon"></span>
+        </summary>
+        <div class="faq-answer" set:html={f.answer}></div>
+      </details>
+    ))}
+  </div>
+
+  <div class="faq-cta">
+    <div class="faq-cta-inner">
+      <div class="faq-cta-text">
+        <strong>Masz inne pytanie?</strong><br>
+        Zadzwoń bezpośrednio, odpowiemy.
+      </div>
+      <a class="faq-cta-btn" href="tel:505895888">
+        <span>Zadzwoń</span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section { padding: 64px 0 56px; position: relative; }
+
+  /* FAQ list */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .faq {
+    border-bottom: 1px solid var(--line);
+    background: rgba(0,0,0,0.18);
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fade-up 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .faq:last-child { border-bottom: none; }
+
+  .faq summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 20px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    transition: background 0.18s;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary:hover { background: rgba(0,0,0,0.3); }
+
+  .faq-q-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--orange);
+    letter-spacing: 1px;
+    min-width: 28px;
+    padding-top: 4px;
+  }
+  .faq-question {
+    flex: 1;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.3px;
+    line-height: 1.3;
+  }
+  .faq-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line-strong);
+    color: var(--orange);
+    transition: transform 0.25s ease, background 0.18s;
+    position: relative;
+  }
+  .faq-icon::before,
+  .faq-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--orange);
+    transition: transform 0.25s ease;
+  }
+  .faq-icon::before {
+    /* horizontal */
+    width: 10px;
+    height: 1.5px;
+  }
+  .faq-icon::after {
+    /* vertical */
+    width: 1.5px;
+    height: 10px;
+  }
+  .faq[open] .faq-icon::after {
+    transform: scaleY(0);
+  }
+  .faq[open] .faq-icon {
+    background: var(--orange);
+  }
+  .faq[open] .faq-icon::before {
+    background: var(--bg-base);
+  }
+  .faq[open] .faq-icon::after {
+    background: var(--bg-base);
+  }
+
+  .faq-answer {
+    padding: 0 22px 22px 72px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-2);
+    animation: fade-in 0.3s ease-out;
+  }
+  .faq-answer :global(strong) { color: var(--text); font-weight: 600; }
+
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+  /* End CTA */
+  .faq-cta {
+    margin-top: 24px;
+    padding: 0 22px;
+    opacity: 0;
+    animation: fade-up 0.7s ease-out 0.95s forwards;
+  }
+  .faq-cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 18px 20px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid var(--line-strong);
+  }
+  .faq-cta-text {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.4;
+    flex: 1;
+  }
+  .faq-cta-text strong { color: var(--text); font-weight: 600; }
+  .faq-cta-btn {
+    flex-shrink: 0;
+    padding: 11px 16px;
+    background: var(--orange);
+    color: #0a0a0a;
+    border: 1px solid var(--orange);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: background 0.18s, transform 0.18s;
+  }
+  .faq-cta-btn:hover {
+    background: var(--orange-light);
+    transform: translateY(-1px);
+  }
+  .faq-cta-btn .arrow {
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+</style>
