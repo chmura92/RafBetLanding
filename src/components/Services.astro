@@ -1,0 +1,75 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { services } from '@/data/services';
+---
+
+<section class="section" id="oferta">
+  <SectionHeader
+    num="02"
+    meta="Co robimy"
+    title="Dwie skale."
+    titleAccent="Jedna robota."
+    subtitle="Wylewki maszynowe dla domów jednorodzinnych i dla hal. To wszystko, czym się zajmujemy. Bez kompromisów."
+  />
+  <div class="services-list">
+    {services.map((s, idx) => (
+      <article class="service" style={`animation-delay: ${0.4 + idx * 0.1}s`}>
+        <header class="service-header">
+          <span class="service-num">{s.num}</span>
+          <h3 class="service-title" set:html={s.title}></h3>
+          <span class="service-meta">{s.metric}</span>
+        </header>
+        <p class="service-desc">{s.desc}</p>
+        <div class="service-includes">
+          <div class="service-includes-label">W zakresie:</div>
+          <div class="service-tags">
+            {s.tags.map(t => <span class="service-tag">{t}</span>)}
+          </div>
+        </div>
+        <a class="service-cta" href={s.ctaHref}>
+          <span>{s.ctaLabel}</span>
+          <span class="arrow">→</span>
+        </a>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .section { padding: 64px 0 48px; position: relative; }
+  .services-list {
+    display: flex; flex-direction: column;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .service {
+    padding: 28px 22px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(0,0,0,0.18);
+    opacity: 0; transform: translateY(20px);
+    animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+    transition: background 0.2s;
+  }
+  .service:last-child { border-bottom: none; }
+  .service:hover { background: rgba(0,0,0,0.32); }
+  .service-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; gap: 16px; }
+  .service-num { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--orange); letter-spacing: 1px; padding-top: 6px; min-width: 28px; }
+  .service-title { font-size: 22px; font-weight: 700; letter-spacing: -0.8px; color: var(--text); line-height: 1.1; flex: 1; }
+  .service-meta { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-3); letter-spacing: 1.2px; text-transform: uppercase; padding-top: 8px; text-align: right; white-space: pre-line; }
+  .service-desc { font-size: 14px; line-height: 1.55; color: var(--text-2); margin-bottom: 18px; padding-left: 44px; }
+  .service-includes { padding-left: 44px; margin-bottom: 18px; }
+  .service-includes-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1.5px; color: var(--text-3); text-transform: uppercase; margin-bottom: 10px; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .service-tag { font-family: var(--font-sans); font-size: 12px; color: var(--text-2); background: rgba(255,255,255,0.04); padding: 5px 10px; border: 1px solid var(--line); line-height: 1.2; }
+  .service-cta {
+    padding-left: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 600;
+    color: var(--orange);
+    letter-spacing: 1px; text-transform: uppercase;
+    transition: gap 0.18s;
+  }
+  .service-cta:hover { gap: 14px; }
+  .service-cta .arrow { font-family: var(--font-mono); font-size: 14px; }
+</style>
