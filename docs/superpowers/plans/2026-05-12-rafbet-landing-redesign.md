@@ -6,7 +6,7 @@
 
 **Architecture:** Astro static site, zero-JS domyślnie, lazy-loading bibliotek (Leaflet) przez Intersection Observer, Web3Forms jako backend formularza. Obrazy zoptymalizowane przez wbudowany komponent `<Image>` (AVIF/WebP, responsive srcset). CSS variables jako design tokens.
 
-**Tech Stack:** Astro 5+, Inter Variable (Google Fonts), JetBrains Mono, Leaflet 1.9.4 + CartoDB Dark tiles, Web3Forms API, deploy: Vercel lub Netlify (decyzja do potwierdzenia).
+**Tech Stack:** Astro 5+, Inter Variable (Google Fonts), JetBrains Mono, Leaflet 1.9.4 + CartoDB Dark tiles, Web3Forms API, deploy: Railway (Nixpacks + `serve dist` na `$PORT`).
 
 **Spec:** `docs/superpowers/specs/2026-05-12-rafbet-landing-redesign-design.md`
 
@@ -90,11 +90,11 @@ Expected: Astro tworzy `src/`, `public/`, `astro.config.mjs`, `package.json`, `t
 ```bash
 npm install
 npm install -D sharp
-npm install leaflet
+npm install leaflet serve
 npm install -D @types/leaflet
 ```
 
-Expected: `node_modules/` utworzone, `package-lock.json` zapisany.
+Expected: `node_modules/` utworzone, `package-lock.json` zapisany. `serve` jako runtime dependency dla Railway (Nixpacks build).
 
 - [ ] **Step 3: Konfiguracja astro.config.mjs**
 
@@ -115,13 +115,33 @@ export default defineConfig({
 });
 ```
 
-- [ ] **Step 4: Uzupełnić .gitignore o pliki Astro**
+- [ ] **Step 4: Uzupełnić .gitignore o pliki Astro i dodać Railway config**
 
 Dodać do istniejącego `.gitignore`:
 ```
 .astro/
-.vercel/
-.netlify/
+```
+
+Dodać `package.json` script dla Railway (do uruchomienia po build):
+
+Edit `package.json`, w `"scripts"` dodać:
+```json
+"start": "serve dist -l ${PORT:-4321} --no-clipboard --single"
+```
+
+Stworzyć `nixpacks.toml`:
+```toml
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npm start"
 ```
 
 - [ ] **Step 5: Verify dev server**
@@ -2393,7 +2413,8 @@ git commit -m "feat: favicon SVG dual-color + og-image z zdjęciem realizacji"
 
 ```bash
 # Web3Forms access key — wygeneruj na https://web3forms.com
-# Recipient ustawiony przez Web3Forms dashboard: posadzkiopole@gmail.com
+# Recipient ustawiony przez Web3Forms dashboard: romduz@gmail.com (tymczasowo,
+# zmienić na posadzkiopole@gmail.com po przekazaniu Rafałowi).
 PUBLIC_WEB3FORMS_KEY=replace-with-real-key-before-deploy
 ```
 
@@ -2404,11 +2425,13 @@ Expected: `.env` i `.env.local` są wyłączone.
 
 - [ ] **Step 3: Stworzyć .env lokalny (NIE commitować)**
 
-User (Roman) rejestruje się na https://web3forms.com, ustawia recipient `posadzkiopole@gmail.com`, kopiuje access key, wkleja do `.env`:
+Roman rejestruje się na https://web3forms.com z `romduz@gmail.com`, ustawia ten sam adres jako recipient (na czas testów — Roman forwarduje Rafałowi gdy potrzeba). Kopiuje access key, wkleja do `.env`:
 
 ```
 PUBLIC_WEB3FORMS_KEY=<real-uuid-from-web3forms>
 ```
+
+Po przekazaniu projektu Rafałowi: zmienić recipient na `posadzkiopole@gmail.com` w Web3Forms dashboard (kod nie wymaga zmian).
 
 - [ ] **Step 4: Commit (tylko .env.example)**
 
@@ -2469,47 +2492,67 @@ git commit -m "perf: optymalizacje po Lighthouse audit"
 
 ---
 
-### Task 23: Deploy
+### Task 23: Deploy na Railway
 
-**Files:** zależne od wyboru hostingu
+**Files:**
+- `nixpacks.toml` (już z Task 1)
+- `package.json` script `start` (już z Task 1)
 
-- [ ] **Step 1: Wybrać hosting**
+- [ ] **Step 1: Push repo na GitHub**
 
-Roman wybiera Vercel albo Netlify (decyzja w specu jako otwarty punkt).
-
-- [ ] **Step 2a (Vercel): Zainstalować Vercel CLI i deployować**
+Stworzyć puste repo na github.com/<user>/rafbet-landing (private albo public).
 
 ```bash
-npm install -g vercel
-vercel login
-vercel --prod
+cd C:/Code/Repositories/RafBetLanding
+git remote add origin git@github.com:<user>/rafbet-landing.git
+git push -u origin main
 ```
 
-Wprowadzić nazwę projektu, framework: Astro (auto-detect).
+- [ ] **Step 2: Stworzyć projekt w Railway**
 
-W Vercel dashboard ustawić env var `PUBLIC_WEB3FORMS_KEY`.
+1. Otworzyć https://railway.app, zalogować się przez GitHub
+2. New Project → Deploy from GitHub repo → wybrać `rafbet-landing`
+3. Railway wykryje `nixpacks.toml` i uruchomi build automatycznie
 
-- [ ] **Step 2b (Netlify): Drag-and-drop folderu dist**
+- [ ] **Step 3: Ustawić env var w Railway dashboard**
 
-Otworzyć https://app.netlify.com/drop, wybrać folder `dist/`.
+Project → Variables → Add:
+- `PUBLIC_WEB3FORMS_KEY` = `<UUID z Web3Forms>`
 
-W Netlify dashboard ustawić env var `PUBLIC_WEB3FORMS_KEY` i podłączyć GitHub dla auto-deploy.
+Po dodaniu Railway zrobi rebuild automatycznie.
 
-- [ ] **Step 3: Konfiguracja domeny**
+- [ ] **Step 4: Wygenerować domenę Railway**
 
-Wskazać domenę `posadzki-wylewki.opole.pl` (lub nową `rafbet.pl`) w panelu hostingu. Ustawić DNS A/CNAME zgodnie z instrukcjami.
+Project → Settings → Networking → Generate Domain.
 
-- [ ] **Step 4: Test produkcji**
+Railway wygeneruje URL typu `rafbet-landing-production-xxxx.up.railway.app`.
 
-Otworzyć https://posadzki-wylewki.opole.pl/ na telefonie. Sprawdzić wszystkie sekcje, lightbox, formularz (test wysłania, sprawdzenie czy dotarł na posadzkiopole@gmail.com).
+- [ ] **Step 5: Test produkcji**
 
-- [ ] **Step 5: Commit (jeśli pliki konfiguracyjne hostingu są w repo)**
+Otworzyć Railway URL na telefonie. Sprawdzić:
+- Wszystkie sekcje renderują się
+- Animacje działają (text reveal, pulse-ring, mesh tła)
+- Galeria + lightbox (klawiatura + dotyk)
+- Mapa Leaflet ładuje się przy scrollu
+- Formularz: wypełnić testowo, wysłać, zweryfikować że trafił na `romduz@gmail.com` (recipient ustawiony w Web3Forms dashboard)
+
+- [ ] **Step 6: Custom domena (opcjonalnie, po zatwierdzeniu z Rafałem)**
+
+Project → Settings → Networking → Custom Domain → wpisać docelową domenę (`rafbet.pl` albo `posadzki-wylewki.opole.pl`).
+
+Railway pokaże wymagane rekordy DNS (CNAME). Wpisać u rejestratora domeny.
+
+Po propagacji DNS (zwykle minuty, max 24h) — domena działa z certyfikatem SSL od Railway.
+
+- [ ] **Step 7: Commit (jeśli były poprawki po deploy)**
 
 ```bash
-git add vercel.json    # lub netlify.toml
-git commit -m "chore: konfiguracja hostingu"
+git add .
+git commit -m "chore: poprawki po deploy testowym na Railway"
 git push origin main
 ```
+
+Railway auto-deployuje po pushu do main.
 
 ---
 

@@ -21,11 +21,11 @@ Zastąpienie ciężkiego landingu z 2016 (Mobirise + jQuery + Bootstrap 3, niezo
 - **Typografia:** Inter Variable (weights 200–800) + JetBrains Mono (300–600) z Google Fonts (preconnect + display=swap)
 - **Obrazy:** komponent `<Image>` Astro → auto-konwersja do AVIF/WebP, responsive `srcset`, lazy loading domyślnie
 - **Mapa:** Leaflet 1.9.4 + CartoDB Dark tiles (lazy-loaded przez Intersection Observer)
-- **Formularz:** Web3Forms (free 250 wiadomości/miesiąc, API key w `.env`, recipient `posadzkiopole@gmail.com`)
-- **Hosting:** statyczny — Vercel albo Netlify (drag-and-drop folderu `dist/` lub GitHub deploy)
+- **Formularz:** Web3Forms (free 250 wiadomości/miesiąc, API key w `.env`, recipient `romduz@gmail.com` tymczasowo dla okresu testów — Roman forwarduje Rafałowi; docelowo zmienić na `posadzkiopole@gmail.com` po uzyskaniu dostępu od Rafała)
+- **Hosting:** Railway (Nixpacks build + `serve dist` przez `$PORT` env var, GitHub auto-deploy)
 - **Język:** PL only (na razie, struktura przewiduje przyszłą `i18n` w Astro)
 
-**Otwarty punkt:** preferowany hosting (Vercel / Netlify / własny FTP) — do potwierdzenia z Romanem.
+**Decyzja hosting:** Railway (zatwierdzone). Build przez Nixpacks, serwowanie statyki przez `serve dist -l $PORT`. Auto-deploy z GitHub po pushu.
 
 ## Identyfikacja i targetowanie
 
@@ -198,10 +198,11 @@ Brak osobnego logo-mark (icon). W footerze ta sama wordmark + "Od 2013".
 - Subtelne pomarańczowe linie w narożnikach prawym górnym i lewym dolnym (industrial framing)
 
 **Web3Forms config:**
-- API key generowany przez Romana przed deployem (przechowywany w `.env` jako `WEB3FORMS_ACCESS_KEY`, dostępny w build-time przez `import.meta.env`)
-- Recipient ustawiony przez Web3Forms dashboard: `posadzkiopole@gmail.com`
-- Subject: "Wycena z rafbet.pl — {imię}"
+- API key generowany przez Romana przed deployem (przechowywany w `.env` jako `PUBLIC_WEB3FORMS_KEY`, dostępny w build-time przez `import.meta.env`)
+- Recipient ustawiony przez Web3Forms dashboard: `romduz@gmail.com` (tymczasowo, Roman forwarduje Rafałowi)
+- Subject: "Wycena z rafbet.pl"
 - Honeypot anti-spam field
+- Po przekazaniu projektu Rafałowi: zmienić recipient na `posadzkiopole@gmail.com` w Web3Forms dashboard (bez zmian w kodzie)
 
 ### 08. Mapa + adres
 - Header: `08 ──── Gdzie nas znajdziesz`, tytuł "Baza w **Dąbrowie**. Pracujemy w terenie."
@@ -343,8 +344,8 @@ astro.config.mjs                   # output: 'static', image service: 'sharp'
 7. **Polskie wersje opinii Google:** pobrać dokładne polskie cytaty (mamy translate EN→PL)
 8. **Logo do wykorzystania poza stroną:** SVG + PNG transparent (faktury, samochody, FB profile)
 9. **Web3Forms API key:** wygenerować i wkleić w `.env`
-10. **Domena docelowa:** zachować `posadzki-wylewki.opole.pl` czy przejść na `rafbet.pl` / `rafbet.opole.pl`
-11. **Hosting:** Vercel / Netlify / inny
+10. **Domena docelowa:** zachować `posadzki-wylewki.opole.pl` czy przejść na `rafbet.pl` / `rafbet.opole.pl` (DNS wskazujący na Railway custom domain)
+11. **Email recipient:** docelowy `posadzkiopole@gmail.com` (Rafał) — na czas testów `romduz@gmail.com` (Roman)
 
 ## Następne kroki
 
