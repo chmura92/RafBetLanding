@@ -1,0 +1,28 @@
+:root {
+  /* Concrete palette */
+  --bg-base: #1e1e20;
+  --bg-deep: #131316;
+
+  --line: rgba(255,255,255,0.10);
+  --line-strong: rgba(255,255,255,0.20);
+
+  --text: #f2f2f2;
+  --text-2: rgba(242,242,242,0.68);
+  --text-3: rgba(242,242,242,0.42);
+
+  --cream: #e8e2d3;
+  --orange: #f97316;
+  --orange-light: #fb923c;
+  --orange-dark: #ea580c;
+  --amber: #fbbf24;
+  --green: #22c55e;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+
+  /* Sizing */
+  --max-width: 1280px;
+  --section-padding-y: 64px;
+  --section-padding-x: 22px;
+}
