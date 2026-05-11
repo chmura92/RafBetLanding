@@ -1,0 +1,173 @@
+---
+const navLinks = [
+  { label: 'Co robimy', href: '#oferta' },
+  { label: 'Jak pracujemy', href: '#proces' },
+  { label: 'Realizacje', href: '#realizacje' },
+  { label: 'Opinie', href: '#opinie' },
+  { label: 'FAQ', href: '#faq' },
+];
+const contactLinks = [
+  { label: '505 895 888', href: 'tel:505895888' },
+  { label: 'posadzkiopole@gmail.com', href: 'mailto:posadzkiopole@gmail.com' },
+  { label: 'Formularz wyceny', href: '#kontakt' },
+  { label: 'Google Maps ↗', href: 'https://www.google.com/maps/place/RafBet/@50.721085,17.7721754,12z/data=!3m1!4b1!4m6!3m5!1s0x47104c99d1d2af27:0xa4551354b1a8b37a!8m2!3d50.721085!4d17.7721754!16s%2Fg%2F1ptyg4956', external: true },
+];
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">
+        <span class="footer-wordmark"><span class="raf">RAF</span><span class="bet">BET</span><span class="dot">.</span></span>
+        <span class="footer-brand-meta">Od 2013</span>
+      </div>
+      <p class="footer-slogan">
+        Rafał Fabiańczyk z ekipą. Wylewki maszynowe od 2013 roku. Opolskie, dolnośląskie.
+      </p>
+    </div>
+  </div>
+
+  <div class="footer-grid">
+    <div>
+      <div class="footer-col-title">Strona</div>
+      {navLinks.map(l => <a class="footer-link" href={l.href}>{l.label}</a>)}
+    </div>
+    <div>
+      <div class="footer-col-title">Kontakt</div>
+      {contactLinks.map(l => (
+        <a class="footer-link" href={l.href} {...(l.external ? { target: '_blank', rel: 'noopener' } : {})}>{l.label}</a>
+      ))}
+    </div>
+  </div>
+
+  <div class="footer-legal">
+    <div class="footer-legal-line">
+      <div class="footer-legal-text">
+        <strong>"RAFBET" Rafał Fabiańczyk</strong><br>
+        NIP 9910327582 · REGON 161512382<br>
+        Sprawdzona Firma · Oferteo.pl
+      </div>
+      <a class="footer-policy" href="/privacy">Polityka prywatności</a>
+    </div>
+  </div>
+
+  <div class="footer-built">
+    © {currentYear} RAFBET · Wszystkie prawa zastrzeżone
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--bg-deep);
+    padding: 32px 22px 20px;
+    position: relative;
+  }
+  .footer-top {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .footer-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .footer-wordmark {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1;
+  }
+  .footer-wordmark .raf { color: var(--cream); }
+  .footer-wordmark .bet { color: var(--orange); }
+  .footer-wordmark .dot { color: var(--orange); }
+  .footer-brand-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--text-3);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+  .footer-slogan {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.5;
+    max-width: 280px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .footer-col-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--text-3);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .footer-link {
+    display: block;
+    font-size: 13px;
+    color: var(--text);
+    text-decoration: none;
+    padding: 3px 0;
+    transition: color 0.18s;
+  }
+  .footer-link:hover { color: var(--orange); }
+
+  .footer-legal {
+    padding-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .footer-legal-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .footer-legal-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--text-3);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .footer-legal-text strong { color: var(--text-2); font-weight: 500; }
+  .footer-policy {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--text-3);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 1px;
+    transition: color 0.18s;
+  }
+  .footer-policy:hover { color: var(--text); }
+
+  .footer-built {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-3);
+    letter-spacing: 1px;
+  }
+</style>
