@@ -1,0 +1,334 @@
+---
+const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLACE_BEFORE_DEPLOY';
+---
+
+<section class="final-cta" id="kontakt">
+  <div class="cta-eyebrow"><span>Krok pierwszy</span></div>
+  <h2 class="cta-title">
+    Czas na Twoją<br>
+    <span class="accent">podłogę.</span>
+  </h2>
+  <p class="cta-text">
+    Zostaw kontakt, oddzwonimy w ciągu 24 godzin z wyceną. <strong>Bez zobowiązań, bez ciśnienia.</strong>
+  </p>
+
+  <form
+    class="form"
+    action="https://api.web3forms.com/submit"
+    method="POST"
+  >
+    <input type="hidden" name="access_key" value={WEB3_KEY} />
+    <input type="hidden" name="from_name" value="Strona Rafbet" />
+    <input type="hidden" name="subject" value="Wycena z rafbet.pl" />
+    <input type="hidden" name="redirect" value="https://posadzki-wylewki.opole.pl/dziekujemy" />
+    <input type="text" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+
+    <div class="form-row">
+      <div class="field-group">
+        <label class="field-label" for="name">Imię<span class="req">*</span></label>
+        <input id="name" class="field" type="text" name="name" placeholder="Jan" required />
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="phone">Telefon<span class="req">*</span></label>
+        <input id="phone" class="field" type="tel" name="phone" placeholder="500 000 000" required />
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label" for="email">Email (opcjonalnie)</label>
+      <input id="email" class="field" type="email" name="email" placeholder="jan@example.pl" />
+    </div>
+
+    <div class="field-group">
+      <label class="field-label" for="message">Metraż i lokalizacja</label>
+      <textarea id="message" class="field" name="message" placeholder="np. 150 m² dom w Opolu, ogrzewanie podłogowe"></textarea>
+    </div>
+
+    <button class="form-submit" type="submit">
+      <span>Wyślij i oddzwonimy</span>
+      <span class="arrow">→</span>
+    </button>
+
+    <p class="form-note">
+      Wysyłając akceptujesz <a href="/privacy">politykę prywatności</a>. Numeru używamy tylko do oddzwonienia.
+    </p>
+  </form>
+
+  <div class="or-divider"><span class="line"></span><span class="text">albo</span><span class="line"></span></div>
+
+  <a class="phone-block" href="tel:505895888">
+    <div class="phone-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    </div>
+    <div class="phone-info">
+      <span class="phone-label">Zadzwoń bezpośrednio</span>
+      <span class="phone-num">505 895 888</span>
+    </div>
+    <div class="phone-hours">
+      <span class="phone-hours-label">Dziś</span>
+      <span class="phone-hours-val">● Dostępni</span>
+    </div>
+  </a>
+</section>
+
+<style>
+  /* ============================== FINAL CTA BLOCK ============================== */
+  .final-cta {
+    position: relative;
+    padding: 56px 22px 48px;
+    background:
+      radial-gradient(ellipse 600px 400px at 50% 100%, rgba(249,115,22,0.18) 0%, transparent 60%),
+      rgba(0,0,0,0.35);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .final-cta::before {
+    /* Subtle decorative line - top-right corner */
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 80px;
+    height: 80px;
+    border-top: 1px solid var(--orange);
+    border-right: 1px solid var(--orange);
+    opacity: 0.5;
+  }
+  .final-cta::after {
+    /* Bottom-left corner */
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 80px;
+    height: 80px;
+    border-bottom: 1px solid var(--orange);
+    border-left: 1px solid var(--orange);
+    opacity: 0.5;
+  }
+
+  .cta-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    animation: fade-up 0.6s ease-out 0.1s forwards;
+  }
+  .cta-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--orange);
+  }
+
+  .cta-title {
+    font-family: var(--font-sans);
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -2.5px;
+    line-height: 0.95;
+    color: var(--text);
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+  }
+  .cta-title .accent { color: var(--orange); }
+
+  .cta-text {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--text-2);
+    max-width: 320px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fade-up 0.7s ease-out 0.35s forwards;
+  }
+  .cta-text strong { color: var(--text); font-weight: 600; }
+
+  /* ============================== FORM ============================== */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fade-up 0.7s ease-out 0.5s forwards;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .field-group {
+    position: relative;
+  }
+  .field-label {
+    position: absolute;
+    top: 11px;
+    left: 14px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-3);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .field-label .req { color: var(--orange); margin-left: 2px; }
+  .field {
+    width: 100%;
+    padding: 30px 14px 12px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--line-strong);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    transition: border-color 0.18s, background 0.18s;
+    border-radius: 0;
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--orange);
+    background: rgba(0,0,0,0.55);
+  }
+  .field::placeholder { color: var(--text-3); font-weight: 400; }
+  textarea.field {
+    resize: vertical;
+    min-height: 90px;
+    font-family: var(--font-sans);
+  }
+
+  .form-submit {
+    width: 100%;
+    padding: 18px 22px;
+    background: var(--orange);
+    color: #0a0a0a;
+    border: 1px solid var(--orange);
+    border-radius: 0;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.18s, transform 0.18s;
+  }
+  .form-submit:hover {
+    background: var(--orange-light);
+    transform: translateY(-1px);
+  }
+  .form-submit .arrow {
+    font-family: var(--font-mono);
+    font-size: 17px;
+    transition: transform 0.18s;
+  }
+  .form-submit:hover .arrow { transform: translateX(3px); }
+
+  .form-note {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-3);
+    letter-spacing: 0.5px;
+    line-height: 1.5;
+  }
+  .form-note a {
+    color: var(--text-2);
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+  }
+
+  /* Divider OR */
+  .or-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    opacity: 0;
+    animation: fade-up 0.6s ease-out 0.7s forwards;
+  }
+  .or-divider .line { flex: 1; height: 1px; background: var(--line); }
+  .or-divider .text {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* Phone block */
+  .phone-block {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 18px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--line-strong);
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s;
+    text-decoration: none;
+    color: var(--text);
+    opacity: 0;
+    animation: fade-up 0.7s ease-out 0.8s forwards;
+  }
+  .phone-block:hover {
+    border-color: rgba(255,255,255,0.32);
+    background: rgba(0,0,0,0.55);
+  }
+  .phone-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(249,115,22,0.12);
+    border: 1px solid rgba(249,115,22,0.3);
+    color: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .phone-info { display: flex; flex-direction: column; gap: 3px; }
+  .phone-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--text-3);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+  .phone-num {
+    font-family: var(--font-sans);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    line-height: 1;
+  }
+  .phone-hours {
+    margin-left: auto;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .phone-hours-label {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    color: var(--text-3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .phone-hours-val {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--green);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+</style>
