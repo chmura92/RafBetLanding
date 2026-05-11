@@ -1,0 +1,9 @@
+.superpowers/
+.playwright-mcp/
+hokage-fullpage.png
+node_modules/
+dist/
+.DS_Store
+*.log
+.env
+.env.local
