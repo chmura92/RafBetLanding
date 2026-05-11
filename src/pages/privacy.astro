@@ -1,0 +1,57 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+---
+
+<BaseLayout
+  title="Polityka prywatności · Rafbet"
+  description="Polityka prywatności i informacja o przetwarzaniu danych osobowych przez RAFBET Rafał Fabiańczyk."
+>
+  <Nav />
+  <main class="privacy">
+    <h1>Polityka prywatności</h1>
+    <p>
+      Administratorem danych osobowych podanych w formularzu kontaktowym jest
+      <strong>"RAFBET" Rafał Fabiańczyk</strong>, ul. Ks. prof. J. Sztonyka 78, 49-120 Dąbrowa, NIP 9910327582.
+    </p>
+    <h2>Cel przetwarzania</h2>
+    <p>
+      Dane (imię, telefon, opcjonalnie email i wiadomość) są zbierane wyłącznie w celu kontaktu zwrotnego
+      i przygotowania wyceny usługi. Nie są przekazywane stronom trzecim.
+    </p>
+    <h2>Przechowywanie</h2>
+    <p>
+      Wiadomości z formularza trafiają na adres <a href="mailto:posadzkiopole@gmail.com">posadzkiopole@gmail.com</a>
+      przez usługę Web3Forms. Dane są przechowywane do czasu zakończenia kontaktu i obsługi zapytania
+      (najczęściej do 12 miesięcy), po czym są usuwane.
+    </p>
+    <h2>Twoje prawa</h2>
+    <p>
+      Masz prawo do wglądu, sprostowania, usunięcia lub przeniesienia swoich danych. Aby skorzystać,
+      napisz na <a href="mailto:posadzkiopole@gmail.com">posadzkiopole@gmail.com</a>.
+    </p>
+    <h2>Cookies i analityka</h2>
+    <p>
+      Strona nie używa cookies śledzących. Mapa Google (Leaflet z CartoDB) jest ładowana z zewnętrznych
+      tile serwerów po wejściu w sekcję kontaktu.
+    </p>
+    <p style="margin-top: 32px"><a href="/" style="border-bottom: 1px solid var(--orange)">← Powrót do strony głównej</a></p>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .privacy {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 22px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+  .privacy h1 { font-size: 32px; font-weight: 800; color: var(--text); margin-bottom: 24px; letter-spacing: -1.5px; }
+  .privacy h2 { font-size: 18px; font-weight: 700; color: var(--text); margin-top: 28px; margin-bottom: 10px; }
+  .privacy p { font-size: 15px; margin-bottom: 14px; }
+  .privacy a { color: var(--text); border-bottom: 1px solid var(--line-strong); }
+  .privacy a:hover { border-bottom-color: var(--orange); }
+</style>
