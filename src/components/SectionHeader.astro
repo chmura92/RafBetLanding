@@ -1,0 +1,71 @@
+---
+export interface Props {
+  num: string;     // "02"
+  meta: string;    // "Co robimy"
+  title: string;   // "Dwie skale."
+  titleAccent: string;  // "Jedna robota."
+  subtitle?: string;
+}
+const { num, meta, title, titleAccent, subtitle } = Astro.props;
+---
+
+<div class="header">
+  <div class="num">
+    <span class="num-pill">{num}</span>
+    <span class="num-line"></span>
+    <span class="num-meta">{meta}</span>
+  </div>
+  <h2 class="title">
+    {title}<br />
+    <span class="accent">{titleAccent}</span>
+  </h2>
+  {subtitle && <p class="subtitle">{subtitle}</p>}
+</div>
+
+<style>
+  .header { padding: 0 var(--section-padding-x); margin-bottom: 36px; }
+
+  .num {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 22px;
+    opacity: 0;
+    animation: fade-up 0.6s ease-out 0.1s forwards;
+  }
+  .num-pill {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--orange);
+    letter-spacing: 1px;
+  }
+  .num-line { flex: 1; height: 1px; background: var(--line); }
+  .num-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .title {
+    font-family: var(--font-sans);
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -2.2px;
+    line-height: 0.95;
+    color: var(--text);
+    margin-bottom: 14px;
+    opacity: 0;
+    animation: fade-up 0.6s ease-out 0.2s forwards;
+  }
+  .accent { color: var(--orange); }
+
+  .subtitle {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text-2);
+    max-width: 330px;
+    opacity: 0;
+    animation: fade-up 0.6s ease-out 0.3s forwards;
+  }
+</style>
