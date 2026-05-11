@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://posadzki-wylewki.opole.pl/sitemap-index.xml
