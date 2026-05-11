@@ -1,0 +1,35 @@
+---
+const items = [
+  { label: 'Lokalizacja', val: 'Opole, PL' },
+  { label: 'Działamy od', val: '2013' },
+  { label: 'Mixokret', val: 'Brinkmann' },
+];
+---
+<div class="meta-bar">
+  {items.map(({ label, val }) => (
+    <div>
+      <span class="label">{label}</span>
+      <span class="val">{val}</span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .meta-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+    background: rgba(0,0,0,0.22);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .meta-bar > div {
+    padding: 10px 14px;
+    border-right: 1px solid var(--line);
+  }
+  .meta-bar > div:last-child { border-right: none; }
+  .label { color: var(--text-3); display: block; margin-bottom: 2px; }
+  .val { color: var(--text); font-weight: 500; }
+</style>

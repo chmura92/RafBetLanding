@@ -1,0 +1,58 @@
+---
+---
+<nav class="nav">
+  <a class="brand" href="/">
+    <span class="wordmark">
+      <span class="raf">RAF</span><span class="bet">BET</span><span class="dot">.</span>
+    </span>
+  </a>
+  <div class="live-badge" aria-label="Dostępni dziś">
+    <span class="live-dot"></span>
+    <span>DOSTĘPNI DZIŚ</span>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 20px;
+    background: rgba(20,20,22,0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; }
+  .wordmark {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1;
+  }
+  .raf { color: var(--cream); }
+  .bet { color: var(--orange); }
+  .dot { color: var(--orange); font-size: 22px; margin-left: 1px; }
+
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 6px 10px;
+    border: 1px solid var(--line-strong);
+    background: rgba(0,0,0,0.3);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--text-2);
+  }
+  .live-dot {
+    position: relative;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+  .live-dot::after {
+    content: ''; position: absolute; inset: -3px; border-radius: 50%;
+    background: var(--green); opacity: 0.35;
+    animation: pulse-ring 1.8s ease-out infinite;
+  }
+</style>
