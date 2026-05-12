@@ -28,6 +28,7 @@ pnpm-debug.log*
 # project-specific
 .superpowers/
 .playwright-mcp/
+.claude/
 hokage-fullpage.png
 
 # worktrees (preview branches for design comparison)
