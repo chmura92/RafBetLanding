@@ -56,9 +56,10 @@ const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLAC
 
   <div class="or-divider"><span class="line"></span><span class="text">albo</span><span class="line"></span></div>
 
-  <a class="phone-block" href="tel:505895888">
+  <a class="phone-block" href="tel:505895888" data-contact-block>
     <div class="phone-icon">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <svg class="ico-phone" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <svg class="ico-mail" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
     </div>
     <div class="phone-info">
       <span class="phone-label">Zadzwoń bezpośrednio</span>
@@ -70,6 +71,27 @@ const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLAC
     </div>
   </a>
 </section>
+
+<script>
+  const block = document.querySelector<HTMLAnchorElement>('[data-contact-block]');
+  if (block) {
+    const day = new Date().getDay(); // 0 = niedziela, 6 = sobota
+    const label = block.querySelector<HTMLElement>('.phone-label')!;
+    const num = block.querySelector<HTMLElement>('.phone-num')!;
+    const hoursVal = block.querySelector<HTMLElement>('.phone-hours-val')!;
+
+    if (day === 0) {
+      block.classList.add('contact-mail');
+      block.href = 'mailto:posadzkiopole@gmail.com';
+      label.textContent = 'Napisz na email';
+      num.textContent = 'posadzkiopole@gmail.com';
+      hoursVal.textContent = '● Oddzwonimy w pon.';
+    } else if (day === 6) {
+      block.classList.add('contact-saturday');
+      hoursVal.textContent = '● Sobota — można dzwonić';
+    }
+  }
+</script>
 
 <style>
   /* ============================== FINAL CTA BLOCK ============================== */
@@ -331,4 +353,16 @@ const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLAC
     font-weight: 500;
     letter-spacing: 0.5px;
   }
+
+  /* Mail/phone icon swap */
+  .phone-icon .ico-mail { display: none; }
+  .phone-block.contact-mail .phone-icon .ico-phone { display: none; }
+  .phone-block.contact-mail .phone-icon .ico-mail { display: block; }
+  .phone-block.contact-mail .phone-num {
+    font-size: 14px;
+    letter-spacing: -0.1px;
+    word-break: break-all;
+  }
+  .phone-block.contact-mail .phone-hours-val { color: var(--red); }
+  .phone-block.contact-saturday .phone-hours-val { color: var(--amber); }
 </style>

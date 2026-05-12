@@ -6,11 +6,28 @@
       <span class="raf">RAF</span><span class="bet">BET</span><span class="dot">.</span>
     </span>
   </a>
-  <div class="live-badge" aria-label="Dostępni dziś">
+  <div class="live-badge" data-availability aria-label="Dostępni dziś">
     <span class="live-dot"></span>
-    <span>DOSTĘPNI DZIŚ</span>
+    <span class="live-text">DOSTĘPNI DZIŚ</span>
   </div>
 </nav>
+
+<script>
+  const badge = document.querySelector<HTMLElement>('[data-availability]');
+  if (badge) {
+    const text = badge.querySelector<HTMLElement>('.live-text')!;
+    const day = new Date().getDay(); // 0 = niedziela, 6 = sobota
+    if (day === 0) {
+      badge.classList.add('badge-sunday');
+      badge.setAttribute('aria-label', 'Niedziela — napisz');
+      text.textContent = 'NIEDZIELA · NAPISZ';
+    } else if (day === 6) {
+      badge.classList.add('badge-saturday');
+      badge.setAttribute('aria-label', 'Sobota — można dzwonić');
+      text.textContent = 'SOBOTA · MOŻNA DZWONIĆ';
+    }
+  }
+</script>
 
 <style>
   .nav {
@@ -55,4 +72,12 @@
     background: var(--green); opacity: 0.35;
     animation: pulse-ring 1.8s ease-out infinite;
   }
+
+  /* Sobota — pomarańczowa, można dzwonić ale nie ma terenu */
+  .badge-saturday .live-dot { background: var(--amber); }
+  .badge-saturday .live-dot::after { background: var(--amber); }
+
+  /* Niedziela — czerwona, sugerujemy email */
+  .badge-sunday .live-dot { background: var(--red); }
+  .badge-sunday .live-dot::after { background: var(--red); }
 </style>
