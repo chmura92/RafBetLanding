@@ -2,113 +2,52 @@
 export interface Props {
   withCracks?: boolean;
 }
-const { withCracks = false } = Astro.props;
+// Prop zachowany dla kompatybilności API (no-op w wariancie A).
+const { withCracks: _withCracks = false } = Astro.props;
 ---
 
 <div class="tex-base"></div>
-<div class="tex-micro"></div>
-<div class="tex-mid"></div>
-<div class="tex-aggregate"></div>
-<div class="tex-stains"></div>
-<div class="tex-trowel"></div>
-{withCracks && <div class="tex-cracks"></div>}
-<div class="tex-highlight"></div>
-<div class="tex-polish"></div>
+<div class="tex-fine"></div>
+<div class="tex-coarse"></div>
 <div class="tex-vignette"></div>
 
 <style>
   div { position: absolute; inset: 0; pointer-events: none; }
 
-  /* Base — subtelny gradient szarości aby tło nie było płaskim flat #1e1e20 */
+  /* Bazowy gradient szarości, dwie radialne plamy na ciemnym tle. */
   .tex-base {
     z-index: 0;
     background:
-      radial-gradient(ellipse 1200px 800px at 30% 20%, rgba(58,60,65,0.5) 0%, transparent 60%),
+      radial-gradient(ellipse 1200px 800px at 30% 20%, rgba(58,60,65,0.45) 0%, transparent 60%),
       radial-gradient(ellipse 900px 1100px at 80% 70%, rgba(40,42,46,0.4) 0%, transparent 55%),
-      linear-gradient(170deg, rgba(50,52,56,0.25) 0%, rgba(28,28,32,0.3) 100%);
+      #1e1e20;
   }
 
-  /* Mikro grain — porowatość cementu (najdrobniejsza struktura) */
-  .tex-micro {
+  /* Drobne ziarno (fine grain). */
+  .tex-fine {
     z-index: 1;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 320 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch' seed='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.85 0 0 0 0 0.85 0 0 0 0 0.88 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
-    background-size: 220px 220px;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.82 0 0 0 0 0.82 0 0 0 0 0.85 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
     background-repeat: repeat;
-    opacity: 0.4;
+    opacity: 0.08;
     mix-blend-mode: overlay;
   }
 
-  /* Średnie ziarno — piasek, drobne kruszywo */
-  .tex-mid {
+  /* Większe kruszywo (coarse aggregate). */
+  .tex-coarse {
     z-index: 2;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 480 480' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='mi'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.28' numOctaves='3' stitchTiles='stitch' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 0.7 0 0 0 0 0.7 0 0 0 0 0.72 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mi)'/%3E%3C/svg%3E");
-    background-size: 380px 380px;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.35' numOctaves='3' stitchTiles='stitch' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.6 0 0 0 0 0.62 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
+    background-size: 500px 500px;
     background-repeat: repeat;
-    opacity: 0.3;
+    opacity: 0.12;
     mix-blend-mode: soft-light;
   }
 
-  /* Kruszywo — wyraźniejsze, większe ziarna mineralne */
-  .tex-aggregate {
-    z-index: 3;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 700 700' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.06' numOctaves='4' stitchTiles='stitch' seed='14'/%3E%3CfeColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.55 0 0 0 0 0.58 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
-    background-size: 540px 540px;
-    background-repeat: repeat;
-    opacity: 0.35;
-    mix-blend-mode: soft-light;
-  }
-
-  /* Makro plamy gęstości — duże nierównomierności jak na realnym betonie */
-  .tex-stains {
-    z-index: 4;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 900 900' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004' numOctaves='2' stitchTiles='stitch' seed='21'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.45 0 0 0 0 0.48 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
-    background-size: 1200px 1200px;
-    background-repeat: repeat;
-    opacity: 0.22;
-    mix-blend-mode: multiply;
-  }
-
-  /* Smugi po pacy — diagonalne, neutralne, bardzo subtelne */
-  .tex-trowel {
-    z-index: 5;
-    background:
-      repeating-linear-gradient(118deg, transparent 0, transparent 90px, rgba(210,212,218,0.018) 90px, rgba(210,212,218,0.018) 92px, transparent 92px, transparent 220px),
-      repeating-linear-gradient(62deg, transparent 0, transparent 130px, rgba(0,0,0,0.045) 130px, rgba(0,0,0,0.045) 132px, transparent 132px, transparent 310px),
-      repeating-linear-gradient(95deg, transparent 0, transparent 350px, rgba(0,0,0,0.025) 350px, rgba(0,0,0,0.025) 352px, transparent 352px, transparent 720px);
-    opacity: 0.55;
-  }
-
-  /* Hairline pęknięcia (opt-in via prop) */
-  .tex-cracks {
-    z-index: 6;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 320 Q200 290 380 340 T780 310' stroke='%23000' stroke-width='0.6' fill='none' opacity='0.4'/%3E%3Cpath d='M120 0 Q140 200 110 410 Q90 600 130 800' stroke='%23000' stroke-width='0.5' fill='none' opacity='0.35'/%3E%3Cpath d='M560 60 Q580 240 540 470 Q520 660 580 800' stroke='%23000' stroke-width='0.5' fill='none' opacity='0.3'/%3E%3C/svg%3E");
-    background-size: 800px 800px;
-    background-repeat: repeat;
-    opacity: 0.4;
-    mix-blend-mode: multiply;
-  }
-
-  /* Highlight — chłodny rozjaśniacz aby było "polerowane" */
-  .tex-highlight {
-    z-index: 7;
-    background:
-      radial-gradient(ellipse 460px 580px at 55% 40%, rgba(190,196,208,0.06) 0%, transparent 65%),
-      radial-gradient(ellipse 800px 350px at 70% -8%, rgba(210,215,225,0.04) 0%, transparent 55%);
-  }
-
-  /* Polish — soft specular bloom (z mockupu hero-v10) */
-  .tex-polish {
-    top: 22%; left: 22%; right: 22%; bottom: 22%;
-    z-index: 8;
-    background: radial-gradient(ellipse 280px 520px at 50% 50%, rgba(220,224,232,0.035) 0%, transparent 70%);
-    filter: blur(60px);
-  }
-
-  /* Vignette — ciemne krawędzie, bogate tonowanie */
+  /* Vignette, ciemne krawędzie i dolne tonowanie. */
   .tex-vignette {
-    z-index: 9;
+    z-index: 3;
     background:
-      radial-gradient(ellipse at center, transparent 38%, rgba(0,0,0,0.55) 100%),
+      radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%),
       linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.4) 100%);
   }
 </style>
