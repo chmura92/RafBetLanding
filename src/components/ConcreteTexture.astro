@@ -1,53 +1,107 @@
 ---
+import bgConcrete from '@/assets/images/bg-process.jpg';
+
 export interface Props {
   withCracks?: boolean;
 }
 const { withCracks = false } = Astro.props;
 ---
 
+<div class="tex-photo" style={`background-image: url(${bgConcrete.src})`}></div>
 <div class="tex-grain"></div>
 <div class="tex-aggregate"></div>
+<div class="tex-stains"></div>
 <div class="tex-trowel"></div>
 {withCracks && <div class="tex-cracks"></div>}
 <div class="tex-highlight"></div>
+<div class="tex-polish"></div>
 <div class="tex-vignette"></div>
 
 <style>
   div { position: absolute; inset: 0; pointer-events: none; }
 
+  /* Real concrete photo — base luminance/grain authenticity */
+  .tex-photo {
+    z-index: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.28;
+    mix-blend-mode: overlay;
+    filter: saturate(0) contrast(1.05);
+  }
+
+  /* Fine micro-grain (porosity) */
   .tex-grain {
     z-index: 1;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 320 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity: 0.6;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 320 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 320px 320px;
+    background-repeat: repeat;
+    opacity: 0.8;
     mix-blend-mode: overlay;
   }
 
+  /* Aggregate stones — visible mineral grain */
   .tex-aggregate {
     z-index: 2;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
-    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='4' stitchTiles='stitch' seed='5'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.65 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+    background-size: 520px 520px;
+    background-repeat: repeat;
+    opacity: 0.55;
     mix-blend-mode: soft-light;
   }
 
-  .tex-trowel {
+  /* Stains — uneven moisture/density patches (large blobs) */
+  .tex-stains {
     z-index: 3;
-    background:
-      repeating-linear-gradient(118deg, transparent 0, transparent 90px, rgba(255,255,255,0.025) 90px, rgba(255,255,255,0.025) 92px, transparent 92px, transparent 220px),
-      repeating-linear-gradient(62deg, transparent 0, transparent 130px, rgba(0,0,0,0.07) 130px, rgba(0,0,0,0.07) 132px, transparent 132px, transparent 310px);
-    opacity: 0.7;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='2' stitchTiles='stitch' seed='12'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.8 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
+    background-size: 900px 900px;
+    background-repeat: repeat;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
   }
 
-  .tex-highlight {
+  /* Trowel marks — diagonal sweeps from helicopter finishing */
+  .tex-trowel {
     z-index: 4;
     background:
-      radial-gradient(ellipse 380px 500px at 55% 45%, rgba(255,235,200,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 700px 300px at 70% -5%, rgba(255,255,255,0.04) 0%, transparent 55%);
+      repeating-linear-gradient(118deg, transparent 0, transparent 90px, rgba(255,255,255,0.04) 90px, rgba(255,255,255,0.04) 92px, transparent 92px, transparent 220px),
+      repeating-linear-gradient(62deg, transparent 0, transparent 130px, rgba(0,0,0,0.10) 130px, rgba(0,0,0,0.10) 132px, transparent 132px, transparent 310px),
+      repeating-linear-gradient(95deg, transparent 0, transparent 350px, rgba(0,0,0,0.06) 350px, rgba(0,0,0,0.06) 352px, transparent 352px, transparent 720px);
+    opacity: 0.85;
   }
 
-  .tex-vignette {
+  /* Hairline cracks (opt-in) */
+  .tex-cracks {
     z-index: 5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 320 Q200 290 380 340 T780 310' stroke='%23000' stroke-width='0.6' fill='none' opacity='0.4'/%3E%3Cpath d='M120 0 Q140 200 110 410 Q90 600 130 800' stroke='%23000' stroke-width='0.5' fill='none' opacity='0.35'/%3E%3Cpath d='M560 60 Q580 240 540 470 Q520 660 580 800' stroke='%23000' stroke-width='0.5' fill='none' opacity='0.3'/%3E%3C/svg%3E");
+    background-size: 800px 800px;
+    background-repeat: repeat;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+  }
+
+  /* Highlight — top-light warmth */
+  .tex-highlight {
+    z-index: 6;
     background:
-      radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.45) 100%),
-      linear-gradient(180deg, transparent 65%, rgba(0,0,0,0.3) 100%);
+      radial-gradient(ellipse 380px 500px at 55% 45%, rgba(255,235,200,0.09) 0%, transparent 60%),
+      radial-gradient(ellipse 700px 300px at 70% -5%, rgba(255,255,255,0.05) 0%, transparent 55%);
+  }
+
+  /* Polish — soft specular bloom (from mockup hero-v10) */
+  .tex-polish {
+    top: 25%; left: 25%; right: 25%; bottom: 25%;
+    z-index: 7;
+    background: radial-gradient(ellipse 240px 480px at 50% 50%, rgba(255,255,255,0.04) 0%, transparent 70%);
+    filter: blur(50px);
+  }
+
+  /* Vignette — darken edges */
+  .tex-vignette {
+    z-index: 8;
+    background:
+      radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%),
+      linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.4) 100%);
   }
 </style>
