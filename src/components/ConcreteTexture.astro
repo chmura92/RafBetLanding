@@ -1,5 +1,6 @@
 ---
-import bgConcrete from '@/assets/images/bg-process.jpg';
+import bgPolish from '@/assets/images/bg-services.jpg';   // zatarta polerowana tafla
+import bgRough from '@/assets/images/bg-process.jpg';     // świeży beton z fakturą
 
 export interface Props {
   withCracks?: boolean;
@@ -7,7 +8,8 @@ export interface Props {
 const { withCracks = false } = Astro.props;
 ---
 
-<div class="tex-photo" style={`background-image: url(${bgConcrete.src})`}></div>
+<div class="tex-photo-a" style={`background-image: url(${bgPolish.src})`}></div>
+<div class="tex-photo-b" style={`background-image: url(${bgRough.src})`}></div>
 <div class="tex-grain"></div>
 <div class="tex-aggregate"></div>
 <div class="tex-stains"></div>
@@ -20,88 +22,101 @@ const { withCracks = false } = Astro.props;
 <style>
   div { position: absolute; inset: 0; pointer-events: none; }
 
-  /* Real concrete photo — base luminance/grain authenticity */
-  .tex-photo {
+  /* Real concrete photo A — zatarta polerowana tafla. Multiply przyciemnia,
+     saturate(0) wyciąga czyste szarości, slight contrast podbija detal. */
+  .tex-photo-a {
     z-index: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.28;
-    mix-blend-mode: overlay;
-    filter: saturate(0) contrast(1.05);
-  }
-
-  /* Fine micro-grain (porosity) */
-  .tex-grain {
-    z-index: 1;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 320 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 320px 320px;
+    background-size: 1400px auto;
+    background-position: 30% 40%;
     background-repeat: repeat;
-    opacity: 0.8;
-    mix-blend-mode: overlay;
+    opacity: 0.32;
+    mix-blend-mode: multiply;
+    filter: saturate(0) contrast(1.08) brightness(1.05);
   }
 
-  /* Aggregate stones — visible mineral grain */
-  .tex-aggregate {
+  /* Real concrete photo B — świeży beton z fakturą. Overlay daje wzbogacenie
+     mid-tonów, inna pozycja+skala zapobiega tile-repeat patternowi. */
+  .tex-photo-b {
+    z-index: 1;
+    background-size: 900px auto;
+    background-position: 70% 20%;
+    background-repeat: repeat;
+    opacity: 0.18;
+    mix-blend-mode: overlay;
+    filter: saturate(0) contrast(0.92);
+  }
+
+  /* Fine micro-grain — porowatość. Drobny noise w neutralnym tonie. */
+  .tex-grain {
     z-index: 2;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='4' stitchTiles='stitch' seed='5'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.65 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
-    background-size: 520px 520px;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 320 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 280px 280px;
     background-repeat: repeat;
     opacity: 0.55;
+    mix-blend-mode: overlay;
+  }
+
+  /* Aggregate stones — średnie ziarna mineralne, gęsto rozłożone */
+  .tex-aggregate {
+    z-index: 3;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='3' stitchTiles='stitch' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.6 0 0 0 0 0.62 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+    background-size: 480px 480px;
+    background-repeat: repeat;
+    opacity: 0.45;
     mix-blend-mode: soft-light;
   }
 
-  /* Stains — uneven moisture/density patches (large blobs) */
+  /* Density stains — wolne, duże plamy nierównomierności */
   .tex-stains {
-    z-index: 3;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='2' stitchTiles='stitch' seed='12'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.8 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
-    background-size: 900px 900px;
+    z-index: 4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='2' stitchTiles='stitch' seed='17'/%3E%3CfeColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.55 0 0 0 0 0.58 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
+    background-size: 1100px 1100px;
+    background-repeat: repeat;
+    opacity: 0.32;
+    mix-blend-mode: multiply;
+  }
+
+  /* Trowel marks — diagonalne smugi po helikopterze, subtelne neutralne */
+  .tex-trowel {
+    z-index: 5;
+    background:
+      repeating-linear-gradient(118deg, transparent 0, transparent 90px, rgba(220,220,225,0.025) 90px, rgba(220,220,225,0.025) 92px, transparent 92px, transparent 220px),
+      repeating-linear-gradient(62deg, transparent 0, transparent 130px, rgba(0,0,0,0.06) 130px, rgba(0,0,0,0.06) 132px, transparent 132px, transparent 310px),
+      repeating-linear-gradient(95deg, transparent 0, transparent 350px, rgba(0,0,0,0.035) 350px, rgba(0,0,0,0.035) 352px, transparent 352px, transparent 720px);
+    opacity: 0.6;
+  }
+
+  /* Hairline pęknięcia (opt-in) */
+  .tex-cracks {
+    z-index: 6;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 320 Q200 290 380 340 T780 310' stroke='%23000' stroke-width='0.6' fill='none' opacity='0.4'/%3E%3Cpath d='M120 0 Q140 200 110 410 Q90 600 130 800' stroke='%23000' stroke-width='0.5' fill='none' opacity='0.35'/%3E%3Cpath d='M560 60 Q580 240 540 470 Q520 660 580 800' stroke='%23000' stroke-width='0.5' fill='none' opacity='0.3'/%3E%3C/svg%3E");
+    background-size: 800px 800px;
     background-repeat: repeat;
     opacity: 0.4;
     mix-blend-mode: multiply;
   }
 
-  /* Trowel marks — diagonal sweeps from helicopter finishing */
-  .tex-trowel {
-    z-index: 4;
-    background:
-      repeating-linear-gradient(118deg, transparent 0, transparent 90px, rgba(255,255,255,0.04) 90px, rgba(255,255,255,0.04) 92px, transparent 92px, transparent 220px),
-      repeating-linear-gradient(62deg, transparent 0, transparent 130px, rgba(0,0,0,0.10) 130px, rgba(0,0,0,0.10) 132px, transparent 132px, transparent 310px),
-      repeating-linear-gradient(95deg, transparent 0, transparent 350px, rgba(0,0,0,0.06) 350px, rgba(0,0,0,0.06) 352px, transparent 352px, transparent 720px);
-    opacity: 0.85;
-  }
-
-  /* Hairline cracks (opt-in) */
-  .tex-cracks {
-    z-index: 5;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 320 Q200 290 380 340 T780 310' stroke='%23000' stroke-width='0.6' fill='none' opacity='0.4'/%3E%3Cpath d='M120 0 Q140 200 110 410 Q90 600 130 800' stroke='%23000' stroke-width='0.5' fill='none' opacity='0.35'/%3E%3Cpath d='M560 60 Q580 240 540 470 Q520 660 580 800' stroke='%23000' stroke-width='0.5' fill='none' opacity='0.3'/%3E%3C/svg%3E");
-    background-size: 800px 800px;
-    background-repeat: repeat;
-    opacity: 0.5;
-    mix-blend-mode: multiply;
-  }
-
-  /* Highlight — top-light warmth */
+  /* Highlight — neutralny chłodny rozjaśniacz (zamiast ciepłego kremu) */
   .tex-highlight {
-    z-index: 6;
-    background:
-      radial-gradient(ellipse 380px 500px at 55% 45%, rgba(255,235,200,0.09) 0%, transparent 60%),
-      radial-gradient(ellipse 700px 300px at 70% -5%, rgba(255,255,255,0.05) 0%, transparent 55%);
-  }
-
-  /* Polish — soft specular bloom (from mockup hero-v10) */
-  .tex-polish {
-    top: 25%; left: 25%; right: 25%; bottom: 25%;
     z-index: 7;
-    background: radial-gradient(ellipse 240px 480px at 50% 50%, rgba(255,255,255,0.04) 0%, transparent 70%);
-    filter: blur(50px);
+    background:
+      radial-gradient(ellipse 420px 540px at 55% 45%, rgba(200,205,215,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 750px 320px at 70% -5%, rgba(220,225,232,0.035) 0%, transparent 55%);
   }
 
-  /* Vignette — darken edges */
-  .tex-vignette {
+  /* Polish — soft specular bloom (chłodne odbicie światła) */
+  .tex-polish {
+    top: 22%; left: 22%; right: 22%; bottom: 22%;
     z-index: 8;
+    background: radial-gradient(ellipse 280px 540px at 50% 50%, rgba(225,228,235,0.03) 0%, transparent 70%);
+    filter: blur(60px);
+  }
+
+  /* Vignette — ciemne krawędzie, mocniejsze przyciemnienie dla bogactwa */
+  .tex-vignette {
+    z-index: 9;
     background:
-      radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%),
-      linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.4) 100%);
+      radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.6) 100%),
+      linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.45) 100%);
   }
 </style>
