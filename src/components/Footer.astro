@@ -60,7 +60,7 @@ const currentYear = new Date().getFullYear();
 <style>
   .footer {
     background: var(--bg-deep);
-    padding: 32px 22px 20px;
+    padding: 32px var(--shell-px) 20px;
     position: relative;
   }
   .footer-top {
@@ -169,5 +169,28 @@ const currentYear = new Date().getFullYear();
     font-size: 9px;
     color: var(--text-3);
     letter-spacing: 1px;
+  }
+
+  @media (min-width: 1024px) {
+    .footer { padding-top: 56px; padding-bottom: 28px; }
+    .footer-top,
+    .footer-grid,
+    .footer-legal,
+    .footer-built {
+      max-width: var(--max-width);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .footer-slogan { font-size: 14px; max-width: 420px; }
+    .footer-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 64px;
+      padding: 32px 0;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: 0;
+    }
+    .footer-legal { padding-top: 28px; }
+    .footer-legal-text { font-size: 10px; }
   }
 </style>

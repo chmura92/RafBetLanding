@@ -89,7 +89,7 @@ import { galleryItems } from '@/data/gallery';
   .photo-caption { font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: #fff; letter-spacing: -0.2px; line-height: 1.2; }
   .photo-meta { font-family: var(--font-mono); font-size: 9.5px; color: var(--orange); letter-spacing: 1px; text-transform: uppercase; }
 
-  .show-more-wrap { padding: 20px 22px 0; }
+  .show-more-wrap { padding: 20px var(--shell-px) 0; }
   .show-more {
     width: 100%;
     padding: 16px 22px;
@@ -106,6 +106,27 @@ import { galleryItems } from '@/data/gallery';
   .show-more .count { font-family: var(--font-mono); font-size: 11px; color: var(--orange); letter-spacing: 1px; }
   .show-more .arrow { font-family: var(--font-mono); font-size: 16px; color: var(--orange); transition: transform 0.3s; }
   .show-more.expanded .arrow { transform: rotate(180deg); }
+
+  @media (min-width: 900px) {
+    .gallery {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .gallery {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      grid-template-columns: repeat(4, 1fr);
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+    }
+    .show-more-wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding-top: 32px;
+    }
+    .show-more { max-width: 480px; margin: 0 auto; }
+  }
 </style>
 
 <script>

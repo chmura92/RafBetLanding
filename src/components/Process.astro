@@ -47,7 +47,7 @@ import { processSteps } from '@/data/process';
 
 <style>
   .section { padding: 64px 0 56px; position: relative; }
-  .process { padding: 0 22px; position: relative; }
+  .process { padding: 0 var(--shell-px); position: relative; }
   .step {
     position: relative;
     padding: 0 0 32px 56px;
@@ -91,7 +91,7 @@ import { processSteps } from '@/data/process';
   .step-detail-value { font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: var(--text); }
 
   .process-cta {
-    margin: 12px 22px 0;
+    margin: 12px var(--shell-px) 0;
     padding: 24px 22px;
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
@@ -114,4 +114,34 @@ import { processSteps } from '@/data/process';
   }
   .process-cta-btn:hover { background: var(--orange-light); transform: translateY(-1px); }
   .process-cta-btn .arrow { font-family: var(--font-mono); font-size: 14px; }
+
+  @media (min-width: 1024px) {
+    .process {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: 32px;
+    }
+    .step { padding: 0; }
+    /* Pozioma linia łącząca między numerkami zamiast pionowej */
+    .step::before {
+      left: 36px;
+      top: 17px;
+      right: -32px;
+      bottom: auto;
+      width: auto;
+      height: 1px;
+      background: linear-gradient(90deg, var(--line-strong) 0%, var(--line) 80%, transparent 100%);
+    }
+    .step:last-child::before { display: none; }
+    .step-num { position: static; margin-bottom: 24px; }
+    .step-title { font-size: 22px; }
+    .process-cta {
+      max-width: var(--max-width);
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 48px;
+    }
+  }
 </style>

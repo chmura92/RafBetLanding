@@ -32,4 +32,9 @@ const items = [
   .meta-bar > div:last-child { border-right: none; }
   .label { color: var(--text-3); display: block; margin-bottom: 2px; }
   .val { color: var(--text); font-weight: 500; }
+
+  @media (min-width: 1024px) {
+    .meta-bar { font-size: 10px; padding: 0 calc(var(--shell-px) - 14px); }
+    .meta-bar > div { padding: 16px 24px; }
+  }
 </style>

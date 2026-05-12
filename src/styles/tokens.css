@@ -26,4 +26,21 @@
   --max-width: 1280px;
   --section-padding-y: 64px;
   --section-padding-x: 22px;
+
+  /* Shell — dynamiczny gutter, na desktopie centruje treść do --max-width.
+     Każdy padding-x w komponentach używa var(--shell-px) zamiast literala "22px". */
+  --shell-px: 22px;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --shell-px: max(40px, calc((100vw - var(--max-width)) / 2));
+    --section-padding-y: 96px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --section-padding-y: 112px;
+  }
 }

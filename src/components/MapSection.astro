@@ -115,7 +115,7 @@ const address = {
   }
 
   .map-header {
-    padding: 36px 22px 24px;
+    padding: 36px var(--shell-px) 24px;
     border-bottom: 1px solid var(--line);
   }
 
@@ -203,7 +203,7 @@ const address = {
 
   /* Address block */
   .address-block {
-    padding: 24px 22px;
+    padding: 24px var(--shell-px);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 14px;
@@ -285,5 +285,21 @@ const address = {
     letter-spacing: 1px;
     padding: 3px 7px;
     white-space: nowrap;
+  }
+
+  @media (min-width: 1024px) {
+    .map-header { padding-top: 56px; padding-bottom: 32px; }
+    .map-title { font-size: 56px; letter-spacing: -2.5px; max-width: var(--max-width); margin: 0 auto; }
+    .map-num { max-width: var(--max-width); margin: 0 auto 24px; }
+    .map-wrap { height: 480px; }
+    .address-block {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+    .addr-val { font-size: 14px; }
   }
 </style>

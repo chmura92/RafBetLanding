@@ -97,7 +97,7 @@ const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLAC
   /* ============================== FINAL CTA BLOCK ============================== */
   .final-cta {
     position: relative;
-    padding: 56px 22px 48px;
+    padding: 56px var(--shell-px) 48px;
     background:
       radial-gradient(ellipse 600px 400px at 50% 100%, rgba(249,115,22,0.18) 0%, transparent 60%),
       rgba(0,0,0,0.35);
@@ -365,4 +365,37 @@ const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLAC
   }
   .phone-block.contact-mail .phone-hours-val { color: var(--red); }
   .phone-block.contact-saturday .phone-hours-val { color: var(--amber); }
+
+  @media (min-width: 1024px) {
+    .final-cta {
+      padding-top: 88px;
+      padding-bottom: 88px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      grid-template-areas:
+        "eyebrow .       "
+        "title   form    "
+        "text    form    "
+        "divider form    "
+        "phone   form    ";
+      column-gap: 80px;
+      row-gap: 0;
+      align-items: start;
+      max-width: calc(var(--max-width) + 2 * var(--shell-px));
+      margin: 0 auto;
+    }
+    .cta-eyebrow { grid-area: eyebrow; margin-bottom: 24px; }
+    .cta-title { grid-area: title; font-size: 80px; letter-spacing: -4px; }
+    .cta-text { grid-area: text; max-width: 460px; font-size: 18px; margin-bottom: 32px; }
+    .or-divider { grid-area: divider; margin: 12px 0; max-width: 360px; }
+    .phone-block { grid-area: phone; align-self: start; }
+    .form { grid-area: form; margin-bottom: 0; align-self: start; }
+    .form-submit { padding: 22px 28px; font-size: 16px; }
+    .field { padding: 32px 16px 14px; font-size: 16px; }
+    textarea.field { min-height: 140px; }
+  }
+
+  @media (min-width: 1440px) {
+    .cta-title { font-size: 96px; letter-spacing: -5px; }
+  }
 </style>

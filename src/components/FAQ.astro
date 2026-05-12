@@ -61,7 +61,7 @@ import { faqItems } from '@/data/faq';
   .faq summary {
     list-style: none;
     cursor: pointer;
-    padding: 20px 22px;
+    padding: 20px var(--shell-px);
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -132,7 +132,7 @@ import { faqItems } from '@/data/faq';
   }
 
   .faq-answer {
-    padding: 0 22px 22px 72px;
+    padding: 0 var(--shell-px) 22px calc(var(--shell-px) + 50px);
     font-size: 14px;
     line-height: 1.6;
     color: var(--text-2);
@@ -145,7 +145,7 @@ import { faqItems } from '@/data/faq';
   /* End CTA */
   .faq-cta {
     margin-top: 24px;
-    padding: 0 22px;
+    padding: 0 var(--shell-px);
     opacity: 0;
     animation: fade-up 0.7s ease-out 0.95s forwards;
   }
@@ -188,5 +188,26 @@ import { faqItems } from '@/data/faq';
   .faq-cta-btn .arrow {
     font-family: var(--font-mono);
     font-size: 14px;
+  }
+
+  @media (min-width: 1024px) {
+    .faq-list {
+      max-width: 920px;
+      margin: 0 auto;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+    }
+    .faq summary { padding: 24px 32px; }
+    .faq-question { font-size: 17px; }
+    .faq-answer { padding: 0 32px 26px 76px; font-size: 15px; }
+    .faq-cta {
+      max-width: 920px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 40px;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .faq-cta-inner { padding: 22px 28px; }
   }
 </style>

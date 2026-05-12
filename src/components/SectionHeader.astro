@@ -23,7 +23,25 @@ const { num, meta, title, titleAccent, subtitle } = Astro.props;
 </div>
 
 <style>
-  .header { padding: 0 var(--section-padding-x); margin-bottom: 36px; }
+  .header { padding: 0 var(--shell-px); margin-bottom: 36px; }
+  @media (min-width: 1024px) {
+    .header {
+      max-width: var(--max-width);
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 64px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      column-gap: 64px;
+      align-items: end;
+    }
+    .num { grid-column: 1 / -1; margin-bottom: 32px; }
+    .title { font-size: 72px; letter-spacing: -3.5px; margin-bottom: 0; }
+    .subtitle { font-size: 17px; max-width: 540px; align-self: end; }
+  }
+  @media (min-width: 1440px) {
+    .title { font-size: 88px; letter-spacing: -4px; }
+  }
 
   .num {
     display: flex; align-items: center; gap: 14px;
