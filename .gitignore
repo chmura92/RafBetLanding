@@ -33,3 +33,6 @@ hokage-fullpage.png
 
 # worktrees (preview branches for design comparison)
 .worktrees/
+
+# raw source photos (curated copies live in src/assets/images/)
+pictures/

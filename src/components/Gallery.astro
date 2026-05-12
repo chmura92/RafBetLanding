@@ -29,7 +29,7 @@ import { galleryItems } from '@/data/gallery';
           loading={i < 6 ? 'eager' : 'lazy'}
         />
         <div class="photo-overlay">
-          <span class="photo-num">{String(i + 1).padStart(2, '0')} / 14</span>
+          <span class="photo-num">{String(i + 1).padStart(2, '0')} / 12</span>
           <div class="photo-info">
             <div class="photo-caption">{item.caption}</div>
             <div class="photo-meta">{item.category}</div>
@@ -43,7 +43,7 @@ import { galleryItems } from '@/data/gallery';
     <button class="show-more" id="showMore" type="button">
       <span>Pokaż więcej realizacji</span>
       <span class="show-more-right">
-        <span class="count">+8 zdjęć</span>
+        <span class="count">+6 zdjęć</span>
         <span class="arrow">↓</span>
       </span>
     </button>
@@ -139,7 +139,7 @@ import { galleryItems } from '@/data/gallery';
       el.style.animationDelay = `${i * 0.05}s`;
     });
     btn.querySelector<HTMLSpanElement>('span:first-child')!.textContent = 'Pokazano wszystkie';
-    btn.querySelector<HTMLElement>('.count')!.textContent = '14 / 14';
+    btn.querySelector<HTMLElement>('.count')!.textContent = '12 / 12';
     btn.classList.add('expanded');
     (btn as HTMLButtonElement).disabled = true;
     btn.style.opacity = '0.6';

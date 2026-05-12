@@ -19,11 +19,11 @@
     const day = new Date().getDay(); // 0 = niedziela, 6 = sobota
     if (day === 0) {
       badge.classList.add('badge-sunday');
-      badge.setAttribute('aria-label', 'Niedziela — napisz');
+      badge.setAttribute('aria-label', 'Niedziela · napisz');
       text.textContent = 'NIEDZIELA · NAPISZ';
     } else if (day === 6) {
       badge.classList.add('badge-saturday');
-      badge.setAttribute('aria-label', 'Sobota — można dzwonić');
+      badge.setAttribute('aria-label', 'Sobota · można dzwonić');
       text.textContent = 'SOBOTA · MOŻNA DZWONIĆ';
     }
   }
