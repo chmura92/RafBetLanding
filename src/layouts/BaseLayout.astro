@@ -56,9 +56,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
   </div>
 
   <style>
-    body { position: relative; }
+    body { position: relative; min-height: 100vh; }
     .concrete-bg {
-      position: fixed;
+      position: absolute;
       inset: 0;
       z-index: 0;
       pointer-events: none;
