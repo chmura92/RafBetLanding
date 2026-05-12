@@ -2,6 +2,7 @@
 import '@/styles/tokens.css';
 import '@/styles/base.css';
 import '@/styles/animations.css';
+import ConcreteTexture from '@/components/ConcreteTexture.astro';
 
 export interface Props {
   title?: string;
@@ -47,6 +48,26 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
   <slot name="head" />
 </head>
 <body>
-  <slot />
+  <div class="concrete-bg" aria-hidden="true">
+    <ConcreteTexture />
+  </div>
+  <div class="page">
+    <slot />
+  </div>
+
+  <style>
+    body { position: relative; }
+    .concrete-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .page {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
 </body>
 </html>
