@@ -1,50 +1,78 @@
 ---
+import { Image } from 'astro:assets';
+import heroImage from '@/assets/images/gallery-01.jpg';
+
 const stats = [
   { label: 'Doświadczenie', value: '22', unit: 'lata' },
   { label: 'Realizacje', value: '500', unit: '+' },
   { label: 'Dziennie', value: '300', unit: 'm²', prefix: 'do' },
 ];
 ---
-<section class="hero" id="hero">
-  <div class="eyebrow">Posadzki maszynowe</div>
+<div class="hero-wrapper" id="hero">
+  <Image
+    src={heroImage}
+    alt=""
+    widths={[1280, 1600, 1920, 2400]}
+    sizes="100vw"
+    quality={78}
+    loading="eager"
+    fetchpriority="high"
+    class="hero-bg"
+    aria-hidden="true"
+  />
+  <div class="hero-overlay" aria-hidden="true"></div>
 
-  <h1 class="headline">
-    <span class="line">Idealnie</span>
-    <span class="line">gładka</span>
-    <span class="line"><span class="accent">posadzka.</span></span>
-  </h1>
+  <section class="hero">
+    <div class="eyebrow">Posadzki maszynowe</div>
 
-  <p class="lead">
-    Robimy jedną rzecz i robimy ją dobrze. <strong>Mixokret, jeden dzień, do 300&nbsp;m²</strong> gładko jak tafla. Gotowe pod parkiet, panele i płytki.
-  </p>
+    <h1 class="headline">
+      <span class="line">Idealnie</span>
+      <span class="line">gładka</span>
+      <span class="line"><span class="accent">posadzka.</span></span>
+    </h1>
 
-  <a class="btn-primary" href="#kontakt">
-    <span>Bezpłatna wycena</span>
-    <span class="arrow">→</span>
-  </a>
+    <p class="lead">
+      Robimy jedną rzecz i robimy ją dobrze. <strong>Mixokret, jeden dzień, do 300&nbsp;m²</strong> gładko jak tafla. Gotowe pod parkiet, panele i płytki.
+    </p>
 
-  <a class="phone-link" href="tel:505895888">
-    <svg class="ico-phone" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    <span class="hint">Zadzwoń teraz</span>
-    <span class="num">505 895 888</span>
-    <span class="phone-arrow" aria-hidden="true">→</span>
-  </a>
-</section>
+    <a class="btn-primary" href="#kontakt">
+      <span>Bezpłatna wycena</span>
+      <span class="arrow">→</span>
+    </a>
 
+    <a class="phone-link" href="tel:505895888">
+      <svg class="ico-phone" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span class="hint">Zadzwoń teraz</span>
+      <span class="num">505 895 888</span>
+      <span class="phone-arrow" aria-hidden="true">→</span>
+    </a>
+  </section>
 
-<div class="stats">
-  {stats.map(s => (
-    <div class="stat">
-      <div class="stat-label">{s.label}</div>
-      <div class="stat-value">
-        {s.prefix && <span class="prefix">{s.prefix}</span>}{s.value}<span class="unit">{s.unit}</span>
+  <div class="stats">
+    {stats.map(s => (
+      <div class="stat">
+        <div class="stat-label">{s.label}</div>
+        <div class="stat-value">
+          {s.prefix && <span class="prefix">{s.prefix}</span>}{s.value}<span class="unit">{s.unit}</span>
+        </div>
       </div>
-    </div>
-  ))}
+    ))}
+  </div>
+
+  <a class="scroll-hint" href="#services" aria-label="Przewiń do usług">
+    <span class="scroll-hint-label">Scroll</span>
+    <span class="scroll-hint-line" aria-hidden="true"></span>
+  </a>
 </div>
 
 <style>
-  .hero { padding: 56px var(--shell-px) 32px; }
+  /* Wrapper — na mobile zachowuje się jak normalny stack, na desktop full-bleed z tłem */
+  .hero-wrapper { position: relative; }
+  #hero > .hero-bg { display: none; }
+  #hero > .hero-overlay { display: none; }
+  #hero > .scroll-hint { display: none; }
+
+  .hero { padding: 56px var(--shell-px) 32px; position: relative; }
   .eyebrow {
     font-family: var(--font-mono);
     font-size: 10px;
@@ -149,6 +177,7 @@ const stats = [
     border-bottom: 1px solid var(--line);
     background: rgba(0,0,0,0.22);
     opacity: 0; animation: fade-up 0.7s ease-out 1.1s forwards;
+    position: relative;
   }
   .stat { padding: 20px 14px; border-right: 1px solid var(--line); min-width: 0; }
   .stat:last-child { border-right: none; }
@@ -164,23 +193,88 @@ const stats = [
 
   /* ============================== DESKTOP (≥1024px) ============================== */
   @media (min-width: 1024px) {
-    .hero {
-      padding-top: 88px;
-      padding-bottom: 56px;
+    .hero-wrapper {
+      /* Kompensacja na nav (sticky, ~73px) + metabar (~64px) nad heroem,
+         żeby cały hero ze statsami mieścił się w viewport po wejściu na stronę. */
+      min-height: calc(100vh - 140px);
+      min-height: calc(100svh - 140px);
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr auto;
+      overflow: hidden;
+      isolation: isolate;
+      background: #0a0a0a;
+    }
+    #hero > .hero-bg {
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 60%;
+      z-index: 0;
+      transform-origin: 30% 60%;
+      opacity: 0;
+      animation:
+        hero-bg-in 1.4s cubic-bezier(0.16,1,0.3,1) 0.1s forwards,
+        hero-ken-burns 28s ease-in-out 1.5s infinite alternate;
+    }
+    #hero > .hero-overlay {
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        /* Lewa kolumna — czytelność tekstu */
+        linear-gradient(90deg, rgba(8,8,10,0.92) 0%, rgba(8,8,10,0.78) 38%, rgba(8,8,10,0.35) 65%, rgba(8,8,10,0.55) 100%),
+        /* Dół — przyklejenie stats */
+        linear-gradient(180deg, rgba(8,8,10,0.45) 0%, rgba(8,8,10,0) 22%, rgba(8,8,10,0) 60%, rgba(8,8,10,0.85) 100%);
+    }
+
+    .hero {
+      padding-top: clamp(48px, 8vh, 96px);
+      padding-bottom: clamp(40px, 6vh, 64px);
+      padding-left: clamp(24px, 3vw, 48px);
+      padding-right: clamp(24px, 3vw, 48px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
       grid-template-areas:
         "eyebrow eyebrow"
         "headline lead"
         "headline cta"
         "headline phone";
-      column-gap: 64px;
+      column-gap: 88px;
       row-gap: 0;
       align-items: start;
+      align-content: center;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      width: 100%;
     }
-    .hero .eyebrow { grid-area: eyebrow; margin-bottom: 56px; font-size: 11px; letter-spacing: 3px; }
-    .hero .headline { grid-area: headline; font-size: 112px; letter-spacing: -5.5px; margin-bottom: 0; }
-    .hero .lead { grid-area: lead; max-width: none; font-size: 18px; line-height: 1.55; margin-bottom: 32px; align-self: end; }
+    .hero .eyebrow {
+      grid-area: eyebrow; margin-bottom: clamp(24px, 5vh, 56px);
+      font-size: 11px; letter-spacing: 3px;
+      display: inline-flex; align-items: center; gap: 12px;
+      width: max-content;
+    }
+    .hero .eyebrow::before {
+      content: ''; display: inline-block;
+      width: 28px; height: 1px; background: var(--orange);
+      transform-origin: left;
+      animation: hero-dash 0.7s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+    }
+    .hero .headline {
+      grid-area: headline;
+      font-size: clamp(80px, 11vw, 112px);
+      letter-spacing: -5.5px; margin-bottom: 0;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.45);
+    }
+    .hero .lead {
+      grid-area: lead; max-width: none; font-size: 18px; line-height: 1.55; margin-bottom: 32px;
+      align-self: end;
+      text-shadow: 0 1px 20px rgba(0,0,0,0.6);
+    }
     .hero .btn-primary {
       grid-area: cta;
       width: 100%;
@@ -189,25 +283,104 @@ const stats = [
       gap: 24px;
       margin-bottom: 0;
       font-size: 16px;
+      box-shadow: 0 20px 50px -20px rgba(249,115,22,0.55);
     }
     .hero .btn-primary .arrow { margin-left: auto; font-size: 18px; }
-    .hero .phone-link { grid-area: phone; margin-top: 28px; margin-bottom: 0; justify-content: flex-start; align-self: end; }
+    .hero .phone-link {
+      grid-area: phone; margin-top: 28px; margin-bottom: 0;
+      justify-content: flex-start; align-self: end;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .hero .phone-link:hover { background: rgba(0,0,0,0.7); }
   }
 
   @media (min-width: 1280px) {
-    .hero .headline { font-size: 132px; letter-spacing: -6.5px; }
+    .hero .headline { font-size: clamp(96px, 8.5vw, 124px); letter-spacing: -6.5px; }
   }
 
-  /* Stats — 3 kolumny wycentrowane, większy font */
+  /* Stats — desktop: w obrębie hero, glassy bottom bar */
   @media (min-width: 1024px) {
     .stats {
-      max-width: 720px;
+      max-width: var(--max-width);
       margin: 0 auto;
+      width: 100%;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-left: 1px solid var(--line);
       border-right: 1px solid var(--line);
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
     .stat { padding: 28px 20px; }
     .stat-value { font-size: 36px; }
     .stat-label { font-size: 10px; }
+  }
+
+  /* Scroll hint */
+  @media (min-width: 1024px) {
+    .scroll-hint {
+      display: flex;
+      position: absolute;
+      right: max(40px, calc((100vw - var(--max-width)) / 2));
+      bottom: 130px;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-3);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      opacity: 0;
+      animation: fade-in 0.8s ease-out 1.4s forwards;
+      transition: color 0.2s;
+    }
+    .scroll-hint:hover { color: var(--text); }
+    .scroll-hint-line {
+      writing-mode: horizontal-tb;
+      width: 1px; height: 56px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.05), var(--orange));
+      position: relative;
+      overflow: hidden;
+    }
+    .scroll-hint-line::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent, #fff, transparent);
+      animation: scroll-pulse 2.2s ease-in-out infinite;
+    }
+  }
+
+  @keyframes hero-bg-in {
+    from { opacity: 0; transform: scale(1.08); }
+    to   { opacity: 1; transform: scale(1.04); }
+  }
+  @keyframes hero-ken-burns {
+    from { transform: scale(1.04) translate(0, 0); }
+    to   { transform: scale(1.12) translate(-2%, -1.5%); }
+  }
+  @keyframes hero-dash {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes scroll-pulse {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg { animation: none !important; opacity: 1 !important; transform: none !important; }
+    .scroll-hint-line::after { animation: none; }
+    .hero .eyebrow::before { animation: none; transform: scaleX(1); }
   }
 </style>
