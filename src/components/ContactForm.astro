@@ -1,5 +1,4 @@
 ---
-const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLACE_BEFORE_DEPLOY';
 ---
 
 <section class="final-cta" id="kontakt">
@@ -15,13 +14,11 @@ const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLAC
 
   <form
     class="form"
-    action="https://api.web3forms.com/submit"
+    action="/api/contact"
     method="POST"
+    data-contact-form
+    novalidate
   >
-    <input type="hidden" name="access_key" value={WEB3_KEY} />
-    <input type="hidden" name="from_name" value="Strona Rafbet" />
-    <input type="hidden" name="subject" value="Wycena z rafbet.pl" />
-    <input type="hidden" name="redirect" value="https://posadzki-wylewki.opole.pl/dziekujemy" />
     <input type="text" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
 
     <div class="form-row">
@@ -45,10 +42,12 @@ const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLAC
       <textarea id="message" class="field" name="message" placeholder="np. 150 m² dom w Opolu, ogrzewanie podłogowe"></textarea>
     </div>
 
-    <button class="form-submit" type="submit">
-      <span>Wyślij i oddzwonimy</span>
+    <button class="form-submit" type="submit" data-submit>
+      <span class="submit-label">Wyślij i oddzwonimy</span>
       <span class="arrow">→</span>
     </button>
+
+    <div class="form-status" data-status hidden></div>
 
     <p class="form-note">
       Wysyłając akceptujesz <a href="/privacy">politykę prywatności</a>. Numeru używamy tylko do oddzwonienia.
@@ -91,6 +90,52 @@ const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLAC
       block.classList.add('contact-saturday');
       hoursVal.textContent = '● Sobota · można dzwonić';
     }
+  }
+
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const status = document.querySelector<HTMLDivElement>('[data-status]');
+  const submit = document.querySelector<HTMLButtonElement>('[data-submit]');
+  const submitLabel = submit?.querySelector<HTMLSpanElement>('.submit-label');
+  const originalLabel = submitLabel?.textContent ?? 'Wyślij i oddzwonimy';
+
+  if (form && status && submit && submitLabel) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submit.disabled = true;
+      submitLabel.textContent = 'Wysyłam...';
+      status.hidden = true;
+      status.className = 'form-status';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { accept: 'application/json' },
+        });
+        const data = await res.json().catch(() => ({ ok: false, error: 'Nieprawidłowa odpowiedź serwera.' }));
+
+        if (res.ok && data.ok) {
+          status.textContent = 'Dzięki! Otrzymaliśmy zgłoszenie. Oddzwonimy w ciągu 24 godzin.';
+          status.classList.add('form-status--ok');
+          status.hidden = false;
+          form.reset();
+          submitLabel.textContent = 'Wysłano ✓';
+          return;
+        }
+
+        status.textContent = data.error ?? 'Coś poszło nie tak. Spróbuj ponownie lub zadzwoń: 505 895 888.';
+        status.classList.add('form-status--err');
+        status.hidden = false;
+        submit.disabled = false;
+        submitLabel.textContent = originalLabel;
+      } catch (err) {
+        status.textContent = 'Brak połączenia. Sprawdź internet lub zadzwoń: 505 895 888.';
+        status.classList.add('form-status--err');
+        status.hidden = false;
+        submit.disabled = false;
+        submitLabel.textContent = originalLabel;
+      }
+    });
   }
 </script>
 
@@ -239,6 +284,36 @@ const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLAC
     transition: transform 0.18s;
   }
   .form-submit:hover .arrow { transform: translateX(3px); }
+  .form-submit:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .form-submit:disabled:hover {
+    background: var(--orange);
+    transform: none;
+  }
+
+  .form-status {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--line-strong);
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--text);
+    background: rgba(0,0,0,0.4);
+  }
+  .form-status--ok {
+    border-color: rgba(34,197,94,0.45);
+    color: #d6f5e1;
+    background: rgba(34,197,94,0.08);
+  }
+  .form-status--err {
+    border-color: rgba(239,68,68,0.45);
+    color: #ffd3d3;
+    background: rgba(239,68,68,0.08);
+  }
 
   .form-note {
     margin-top: 10px;
