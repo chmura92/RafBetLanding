@@ -111,6 +111,14 @@ import { galleryItems } from '@/data/gallery';
     .gallery {
       grid-template-columns: repeat(3, 1fr);
     }
+    /* W siatce 3+ kolumn rezygnujemy z różnych aspect-ratio,
+       żeby nie pojawiały się szare prześwity tła między kolumnami. */
+    .photo,
+    .photo:nth-child(3), .photo:nth-child(4),
+    .photo:nth-child(7), .photo:nth-child(8),
+    .photo:nth-child(11), .photo:nth-child(12) {
+      aspect-ratio: 1 / 1;
+    }
   }
   @media (min-width: 1024px) {
     .gallery {

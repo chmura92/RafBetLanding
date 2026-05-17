@@ -181,7 +181,16 @@ const stats = [
     .hero .eyebrow { grid-area: eyebrow; margin-bottom: 56px; font-size: 11px; letter-spacing: 3px; }
     .hero .headline { grid-area: headline; font-size: 112px; letter-spacing: -5.5px; margin-bottom: 0; }
     .hero .lead { grid-area: lead; max-width: none; font-size: 18px; line-height: 1.55; margin-bottom: 32px; align-self: end; }
-    .hero .btn-primary { grid-area: cta; width: auto; align-self: center; justify-self: start; padding: 18px 28px; gap: 24px; margin-bottom: 0; }
+    .hero .btn-primary {
+      grid-area: cta;
+      width: 100%;
+      align-self: center;
+      padding: 22px 28px;
+      gap: 24px;
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+    .hero .btn-primary .arrow { margin-left: auto; font-size: 18px; }
     .hero .phone-link { grid-area: phone; margin-top: 28px; margin-bottom: 0; justify-content: flex-start; align-self: end; }
   }
 

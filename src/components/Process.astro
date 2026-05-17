@@ -134,15 +134,21 @@ import { processSteps } from '@/data/process';
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      column-gap: 32px;
+      column-gap: 28px;
+      align-items: stretch;
+    }
+    .step {
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
     .step::before { display: block; }
-    .step { padding: 0; }
     /* Pozioma linia łącząca między numerkami zamiast pionowej */
     .step::before {
       left: 36px;
       top: 17px;
-      right: -32px;
+      right: -28px;
       bottom: auto;
       width: auto;
       height: 1px;
@@ -151,6 +157,8 @@ import { processSteps } from '@/data/process';
     .step:last-child::before { display: none; }
     .step-num { position: static; margin-bottom: 24px; }
     .step-title { font-size: 22px; }
+    .step-desc { flex-grow: 1; }
+    .step-detail { margin-top: auto; align-self: stretch; }
     .process-cta {
       max-width: var(--max-width);
       margin-left: auto;
