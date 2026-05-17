@@ -288,6 +288,21 @@ const avgRating = ((reviewsAggregate.google.rating * reviewsAggregate.google.cou
   .reviews-cta-text { color: var(--text); font-weight: 500; }
   .arrow { font-family: var(--font-mono); font-size: 14px; color: var(--orange); }
 
+  @media (min-width: 720px) and (max-width: 1023px) {
+    .reviews-list {
+      max-width: 640px;
+      margin: 0 auto;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+    }
+    .reviews-cta-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      flex-direction: row;
+    }
+    .reviews-cta-btn { flex: 1; }
+  }
+
   @media (min-width: 1024px) {
     .rating-sources {
       max-width: 720px;

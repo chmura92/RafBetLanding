@@ -115,6 +115,19 @@ import { processSteps } from '@/data/process';
   .process-cta-btn:hover { background: var(--orange-light); transform: translateY(-1px); }
   .process-cta-btn .arrow { font-family: var(--font-mono); font-size: 14px; }
 
+  @media (min-width: 720px) and (max-width: 1023px) {
+    .process {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 32px;
+      row-gap: 8px;
+    }
+    .step { padding-bottom: 24px; }
+    /* Połowiczne łamanie pionowej linii w 2-col: nie próbuje łączyć między kolumnami */
+    .step::before { display: none; }
+    .process-cta { max-width: 640px; margin-left: auto; margin-right: auto; margin-top: 16px; }
+  }
+
   @media (min-width: 1024px) {
     .process {
       max-width: var(--max-width);
@@ -123,6 +136,7 @@ import { processSteps } from '@/data/process';
       grid-template-columns: repeat(4, 1fr);
       column-gap: 32px;
     }
+    .step::before { display: block; }
     .step { padding: 0; }
     /* Pozioma linia łącząca między numerkami zamiast pionowej */
     .step::before {

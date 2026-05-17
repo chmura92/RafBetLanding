@@ -16,8 +16,8 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class="footer">
-  <div class="footer-top">
-    <div>
+  <div class="footer-grid">
+    <div class="footer-brand-col">
       <div class="footer-brand">
         <span class="footer-wordmark"><span class="raf">RAF</span><span class="bet">BET</span><span class="dot">.</span></span>
         <span class="footer-brand-meta">Od 2013</span>
@@ -26,14 +26,11 @@ const currentYear = new Date().getFullYear();
         Rafał Fabiańczyk z ekipą. Wylewki maszynowe od 2013 roku. Opolskie, dolnośląskie.
       </p>
     </div>
-  </div>
-
-  <div class="footer-grid">
-    <div>
+    <div class="footer-col">
       <div class="footer-col-title">Strona</div>
       {navLinks.map(l => <a class="footer-link" href={l.href}>{l.label}</a>)}
     </div>
-    <div>
+    <div class="footer-col">
       <div class="footer-col-title">Kontakt</div>
       {contactLinks.map(l => (
         <a class="footer-link" href={l.href} {...(l.external ? { target: '_blank', rel: 'noopener' } : {})}>{l.label}</a>
@@ -63,11 +60,8 @@ const currentYear = new Date().getFullYear();
     padding: 32px var(--shell-px) 20px;
     position: relative;
   }
-  .footer-top {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding-bottom: 24px;
+  .footer-brand-col {
+    padding-bottom: 22px;
     border-bottom: 1px solid var(--line);
   }
   .footer-brand {
@@ -106,6 +100,9 @@ const currentYear = new Date().getFullYear();
     gap: 22px;
     padding: 22px 0;
     border-bottom: 1px solid var(--line);
+  }
+  .footer-brand-col {
+    grid-column: 1 / -1;
   }
   .footer-col-title {
     font-family: 'JetBrains Mono', monospace;
@@ -173,7 +170,6 @@ const currentYear = new Date().getFullYear();
 
   @media (min-width: 1024px) {
     .footer { padding-top: 56px; padding-bottom: 28px; }
-    .footer-top,
     .footer-grid,
     .footer-legal,
     .footer-built {
@@ -181,14 +177,17 @@ const currentYear = new Date().getFullYear();
       margin-left: auto;
       margin-right: auto;
     }
-    .footer-slogan { font-size: 14px; max-width: 420px; }
+    .footer-slogan { font-size: 14px; max-width: 360px; }
     .footer-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 64px;
-      padding: 32px 0;
-      max-width: 520px;
-      margin-left: auto;
-      margin-right: 0;
+      grid-template-columns: minmax(280px, 1.4fr) 1fr 1fr;
+      gap: 56px;
+      padding: 8px 0 36px;
+      align-items: start;
+    }
+    .footer-brand-col {
+      grid-column: auto;
+      padding-bottom: 0;
+      border-bottom: none;
     }
     .footer-legal { padding-top: 28px; }
     .footer-legal-text { font-size: 10px; }

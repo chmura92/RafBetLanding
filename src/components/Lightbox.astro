@@ -169,10 +169,11 @@ import { galleryItems } from '@/data/gallery';
     position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center; gap: 4px;
     text-align: center; pointer-events: none;
-    padding: 0 80px;
-    max-width: 100%;
+    padding: 0 16px;
+    max-width: min(100%, 520px);
+    box-sizing: border-box;
   }
-  .lightbox-caption { font-size: 15px; font-weight: 600; color: #fff; letter-spacing: -0.3px; }
+  .lightbox-caption { font-size: 14px; font-weight: 600; color: #fff; letter-spacing: -0.3px; }
   .lightbox-meta { font-family: var(--font-mono); font-size: 11px; color: var(--orange); letter-spacing: 1.5px; text-transform: uppercase; }
 
   .lightbox-counter {
@@ -226,5 +227,7 @@ import { galleryItems } from '@/data/gallery';
     .lightbox-btn-prev { left: 20px; }
     .lightbox-btn-next { right: 20px; }
     .lightbox-img { max-height: calc(100vh - 200px); }
+    .lightbox-info { padding: 0 80px; }
+    .lightbox-caption { font-size: 15px; }
   }
 </style>
