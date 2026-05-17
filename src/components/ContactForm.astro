@@ -5,8 +5,9 @@ const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLAC
 <section class="final-cta" id="kontakt">
   <div class="cta-eyebrow"><span>Krok pierwszy</span></div>
   <h2 class="cta-title">
-    Czas na Twoją<br>
-    <span class="accent">podłogę.</span>
+    <span class="cta-line">Czas na</span>
+    <span class="cta-line">Twoją</span>
+    <span class="cta-line accent">podłogę.</span>
   </h2>
   <p class="cta-text">
     Zostaw kontakt, oddzwonimy w ciągu 24 godzin z wyceną. <strong>Bez zobowiązań, bez ciśnienia.</strong>
@@ -156,9 +157,16 @@ const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLAC
     line-height: 0.95;
     color: var(--text);
     margin-bottom: 18px;
-    opacity: 0;
-    animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
   }
+  .cta-title .cta-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .cta-title .cta-line:nth-child(1) { animation-delay: 0.2s; }
+  .cta-title .cta-line:nth-child(2) { animation-delay: 0.3s; }
+  .cta-title .cta-line:nth-child(3) { animation-delay: 0.4s; }
   .cta-title .accent { color: var(--orange); }
 
   .cta-text {
@@ -361,7 +369,27 @@ const WEB3_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'PLACEHOLDER_KEY_REPLAC
   .phone-block.contact-mail .phone-num {
     font-size: 14px;
     letter-spacing: -0.1px;
-    word-break: break-all;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.2;
+  }
+  .phone-block.contact-mail {
+    flex-wrap: wrap;
+    row-gap: 8px;
+    align-items: flex-start;
+  }
+  .phone-block.contact-mail .phone-info {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .phone-block.contact-mail .phone-hours {
+    flex: 0 0 100%;
+    margin-left: 0;
+    padding-left: 54px;
+    text-align: left;
+    flex-direction: row;
+    gap: 8px;
+    align-items: baseline;
   }
   .phone-block.contact-mail .phone-hours-val { color: var(--red); }
   .phone-block.contact-saturday .phone-hours-val { color: var(--amber); }

@@ -112,7 +112,9 @@ const stats = [
 
   .phone-link {
     display: flex; align-items: center; justify-content: center;
-    gap: 12px;
+    flex-wrap: wrap;
+    row-gap: 4px;
+    column-gap: 12px;
     margin-bottom: 44px;
     color: var(--text);
     opacity: 0; animation: fade-up 0.7s ease-out 1.0s forwards;
@@ -121,7 +123,7 @@ const stats = [
   .phone-link .ico-mail { display: none; }
   .phone-link.contact-mail .ico-phone { display: none; }
   .phone-link.contact-mail .ico-mail { display: block; }
-  .phone-link .hint { font-size: 14px; color: var(--text-3); font-weight: 400; }
+  .phone-link .hint { font-size: 14px; color: var(--text-3); font-weight: 400; white-space: nowrap; }
   .phone-link .num {
     font-family: var(--font-sans);
     font-size: 18px;
@@ -132,9 +134,12 @@ const stats = [
     padding-bottom: 1px;
   }
   .phone-link.contact-mail .num {
-    font-size: 14px;
+    font-size: 15px;
     letter-spacing: -0.1px;
-    word-break: break-all;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    flex-basis: 100%;
+    text-align: center;
   }
 
   .stats {
@@ -177,6 +182,10 @@ const stats = [
     .hero .lead { grid-area: lead; max-width: none; font-size: 18px; line-height: 1.55; margin-bottom: 32px; align-self: end; }
     .hero .btn-primary { grid-area: cta; width: auto; align-self: center; justify-self: start; padding: 18px 28px; gap: 24px; margin-bottom: 0; }
     .hero .phone-link { grid-area: phone; margin-top: 28px; margin-bottom: 0; justify-content: flex-start; align-self: end; }
+    .hero .phone-link.contact-mail .num {
+      flex-basis: auto;
+      text-align: left;
+    }
   }
 
   @media (min-width: 1280px) {

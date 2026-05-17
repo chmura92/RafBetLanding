@@ -31,6 +31,9 @@ pnpm-debug.log*
 .claude/
 hokage-fullpage.png
 
+# debug screenshots
+/*.png
+
 # worktrees (preview branches for design comparison)
 .worktrees/
 
