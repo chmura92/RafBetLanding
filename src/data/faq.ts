@@ -8,7 +8,7 @@ export const faqItems: FaqItem[] = [
   {
     num: '01',
     question: 'Ile kosztuje wylewka za m²?',
-    answer: 'Cena zależy od metrażu, technologii i lokalizacji. Najczęściej domowe wylewki kosztują <strong>60–110 zł / m²</strong> z materiałem. Bezpłatna wycena po pomiarze, bez zobowiązań.',
+    answer: 'Cena zależy od metrażu, technologii i lokalizacji. <strong>Wycena ustalana indywidualnie</strong> po pomiarze. Bezpłatnie i bez zobowiązań.',
   },
   {
     num: '02',
@@ -28,7 +28,7 @@ export const faqItems: FaqItem[] = [
   {
     num: '05',
     question: 'Dajecie gwarancję?',
-    answer: 'Tak, <strong>5 lat gwarancji</strong> na wylewkę. Jeśli pęknięcia lub odspojenia są z naszej winy, naprawiamy bezpłatnie.',
+    answer: 'Tak, <strong>2 lata gwarancji</strong> na wylewkę. Jeśli pęknięcia lub odspojenia są z naszej winy, naprawiamy bezpłatnie.',
   },
   {
     num: '06',
