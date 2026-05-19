@@ -26,8 +26,8 @@ const stats = [
     <div class="eyebrow">Posadzki maszynowe</div>
 
     <h1 class="headline">
-      <span class="line">Posadzka</span>
-      <span class="line">na najwyższym</span>
+      <span class="line">Posadzka na</span>
+      <span class="line">najwyższym</span>
       <span class="line"><span class="accent">poziomie.</span></span>
     </h1>
 
@@ -85,17 +85,17 @@ const stats = [
   }
   .headline {
     font-family: var(--font-sans);
-    font-size: clamp(52px, 18vw, 68px);
+    font-size: clamp(44px, 15vw, 60px);
     font-weight: 800;
-    letter-spacing: -3.5px;
-    line-height: 0.9;
+    letter-spacing: -3px;
+    line-height: 0.94;
     color: var(--text);
     margin-bottom: 26px;
   }
   @media (max-width: 360px) {
-    .headline { letter-spacing: -2.5px; }
+    .headline { font-size: 13.5vw; letter-spacing: -3px; }
   }
-  .line { display: block; opacity: 0; transform: translateY(20px); animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .line { display: block; white-space: nowrap; opacity: 0; transform: translateY(20px); animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
   .line:nth-child(1) { animation-delay: 0.2s; }
   .line:nth-child(2) { animation-delay: 0.32s; }
   .line:nth-child(3) { animation-delay: 0.44s; }
@@ -266,8 +266,8 @@ const stats = [
     }
     .hero .headline {
       grid-area: headline;
-      font-size: clamp(80px, 11vw, 112px);
-      letter-spacing: -5.5px; margin-bottom: 0;
+      font-size: clamp(64px, 8.5vw, 96px);
+      letter-spacing: -4.5px; margin-bottom: 0;
       text-shadow: 0 2px 40px rgba(0,0,0,0.45);
     }
     .hero .lead {
@@ -297,7 +297,7 @@ const stats = [
   }
 
   @media (min-width: 1280px) {
-    .hero .headline { font-size: clamp(96px, 8.5vw, 124px); letter-spacing: -6.5px; }
+    .hero .headline { font-size: clamp(88px, 7.2vw, 108px); letter-spacing: -5px; }
   }
 
   /* Stats — desktop: w obrębie hero, glassy bottom bar */
